@@ -8,6 +8,7 @@ export default defineConfig({
   ],
   server: {
     host: '0.0.0.0',
+    appType: 'mpa',
     port: process.env.PORT || 5173,
     proxy: {
       '/api': {
@@ -16,4 +17,4 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
     },
   },
-}})
+}}) 
