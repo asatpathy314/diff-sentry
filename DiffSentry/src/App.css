@@ -49,3 +49,12 @@ body {
 .read-the-docs {
   color: #888;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Add scroll margin to sections with IDs to offset the fixed header */
+section[id] {
+  scroll-margin-top: 80px; /* Adjust this value to match your header height */
+}
