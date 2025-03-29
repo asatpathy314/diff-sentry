@@ -1,4 +1,0 @@
-build:
-  docker:
-    api: Dockerfile.api
-    web: Dockerfile.web
