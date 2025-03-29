@@ -5,15 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "heroku-postbuild": "npm run build",
-    "start": "node server.js"
+    "start": "serve -s build",
+    "build": "vite build"
   },
   "dependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "serve": "^14.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
