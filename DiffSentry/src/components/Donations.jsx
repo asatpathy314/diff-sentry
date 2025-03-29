@@ -68,7 +68,7 @@ const Donations = () => {
                 href="https://chrome.google.com/webstore/category/extensions" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="btn-secondary"
+                className="btn-secondary text-xl px-6 py-3"
                 title="This would link to the actual Chrome extension once published"
               >
                 Start Supporting Open Source
@@ -199,4 +199,4 @@ const Donations = () => {
   );
 };
 
-export default Donations; 
+export default Donations;
