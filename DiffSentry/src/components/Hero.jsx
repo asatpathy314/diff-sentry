@@ -57,9 +57,9 @@ const Hero = () => {
               </Motion.a>
             </div>
             
-            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
+            <div className="mt-6 pt-6 border-t border-gray-300 dark:border-gray-700">
               <p className="text-sm text-gray-500 mb-2">Trusted by engineering teams at</p>
-              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mt-"> {/* added mt-4 */}
                 <img src="https://placehold.co/120x30/DDDDDD/999999?text=GitPub" alt="GitPub" className="h-6 opacity-60 hover:opacity-100 transition" />
                 <img src="https://placehold.co/120x30/DDDDDD/999999?text=FordVPN" alt="FordVPN" className="h-6 opacity-60 hover:opacity-100 transition" />
                 <img src="https://placehold.co/120x30/DDDDDD/999999?text=CanesStreet" alt="CanesStreet" className="h-6 opacity-60 hover:opacity-100 transition" />
