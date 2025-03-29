@@ -1,8 +1,58 @@
-from typing import Union
+from typing import Union, Dict
+import os
 import logging
 import time
 import uuid
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, HTTPException
+from google import genai
+from google.genai.types import Part55
+import json
+
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+PROMPT_TEMPLATE = """Analyze the following diff snippet solely based on its content. Identify and report only directly observable security vulnerabilities within the code itself, focusing on the following vulnerability categories:
+
+Injection
+Broken Authentication
+Sensitive data exposure
+XML External Entities (XXE)
+Broken Access Control
+Security Misconfiguration
+XSS
+Insecure Deserialization
+Using Components with Known Vulnerabilities
+Insufficient logging & monitoring 
+Broken object level authorization
+Broken object property level authorization
+Unrestricted resource consumption
+Broken function level authorization
+Unrestricted access to sensitive business flows
+Server side request forgery
+Improper inventory management
+Unsafe consumption of APIs
+Broken access control
+Cryptographic failures
+Insecure design
+Identification and authentication failures
+Software and data integrity failures
+Stack based buffer-overflows
+Use-after-free vulnerabilities
+Format string vulnerabilities
+Integer Overflows/Underflows 
+Double Free
+Dangling Pointer
+Type Confusion
+Arbitrary Write
+Uninitialized Memory
+
+Do not consider external factors, potential scenarios, or dependencies. Only report vulnerabilities that are demonstrably present within the given code.
+
+Here is the code diff:
+{}
+"""
+
+vuln_client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Configure logging
 logging.basicConfig(
@@ -90,3 +140,18 @@ async def analyze_diff(
             exc_info=True
         )
         raise
+
+async def vulnerability_engine(
+    diff: Dict,
+    logger=Depends(get_request_logger)
+):
+    prompt = PROMPT_TEMPLATE.format(json.dumps(diff))
+
+    response = vuln_client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt
+    )
+
+    logger.info(f"{response.text}")
+
+    
