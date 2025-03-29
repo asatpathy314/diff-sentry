@@ -155,7 +155,7 @@ const Security = () => {
             </div>
             
             <div className="pt-2">
-              <a href="#signup" className="btn-primary">
+              <a href="#signup" className="btn-primary text-xl">
                 Start Protecting Your Code
               </a>
             </div>
@@ -166,4 +166,4 @@ const Security = () => {
   );
 };
 
-export default Security; 
+export default Security;
