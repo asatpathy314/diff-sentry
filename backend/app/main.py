@@ -131,8 +131,11 @@ async def analyze_diff(
         
         # Log detailed data at debug level to avoid exposing sensitive info at higher levels
         logger.info(f"Diff data content: {data}")
+
+        await vulnerability_engine(data)
         
         return {"status": "received", "message": "Diff data logged"}
+    
     except Exception as e:
         logger.error(
             f"Error processing diff data: {str(e)}",
