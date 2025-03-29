@@ -5,7 +5,6 @@ import time
 import uuid
 from fastapi import FastAPI, Request, Depends, HTTPException
 from google import genai
-from google.genai.types import Part55
 import json
 
 
