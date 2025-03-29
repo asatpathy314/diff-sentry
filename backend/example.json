@@ -1,0 +1,162 @@
+{
+  "metadata": {
+    "repo": "asatpathy314/testing-diff",
+    "commit": "72c4a8a142a4a28c5a6caa5e355691fa4921ec30"
+  },
+  "diff": {
+    "type": "GitDiff",
+    "files": [
+      {
+        "type": "ChangedFile",
+        "chunks": [
+          {
+            "context": "jobs:",
+            "type": "Chunk",
+            "toFileRange": { "start": 25, "lines": 12 },
+            "fromFileRange": { "start": 25, "lines": 21 },
+            "changes": [
+              {
+                "type": "UnchangedLine",
+                "lineBefore": 25,
+                "lineAfter": 25,
+                "content": "        json_diff_file_output: 'diff.json'"
+              },
+              {
+                "type": "UnchangedLine",
+                "lineBefore": 26,
+                "lineAfter": 26,
+                "content": ""
+              },
+              {
+                "type": "UnchangedLine",
+                "lineBefore": 27,
+                "lineAfter": 27,
+                "content": "    - name: Send POST request to DiffSentry"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 28,
+                "content": "      uses: tyrrrz/action-http-request@master"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 29,
+                "content": "      id: api-call"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 30,
+                "content": "      with:"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 31,
+                "content": "        url: https://diff-sentry-04d2d65273ba.herokuapp.com/diffsentry"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 32,
+                "content": "        method: POST"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 33,
+                "content": "        headers: |"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 34,
+                "content": "          Content-Type: application/json"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 35,
+                "content": "        body: |"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 36,
+                "content": "          {"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 37,
+                "content": "            \"metadata\": {"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 38,
+                "content": "              \"repo\": \"${{ github.repository }}\","
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 39,
+                "content": "              \"commit\": \"${{ github.sha }}\""
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 40,
+                "content": "            },"
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 41,
+                "content": "            \"diff\": \"${{ steps.diff-capture.outputs.json-diff }}\""
+              },
+              {
+                "type": "DeletedLine",
+                "lineBefore": 42,
+                "content": "          }"
+              },
+              {
+                "type": "AddedLine",
+                "lineAfter": 28,
+                "content": "      run: |"
+              },
+              {
+                "type": "AddedLine",
+                "lineAfter": 29,
+                "content": "        DIFF_CONTENT=$(cat diff.json)"
+              },
+              {
+                "type": "AddedLine",
+                "lineAfter": 30,
+                "content": "        curl -X POST https://diff-sentry-04d2d65273ba.herokuapp.com/diffsentry \\"
+              },
+              {
+                "type": "AddedLine",
+                "lineAfter": 31,
+                "content": "          -H \"Content-Type: application/json\" \\"
+              },
+              {
+                "type": "AddedLine",
+                "lineAfter": 32,
+                "content": "          -d \"{\\\"metadata\\\": {\\\"repo\\\": \\\"${{ github.repository }}\\\", \\\"commit\\\": \\\"${{ github.sha }}\\\"}, \\\"diff\\\": $DIFF_CONTENT}\""
+              },
+              { "type": "AddedLine", "lineAfter": 33, "content": "" },
+              {
+                "type": "UnchangedLine",
+                "lineBefore": 43,
+                "lineAfter": 34,
+                "content": ""
+              },
+              {
+                "type": "UnchangedLine",
+                "lineBefore": 44,
+                "lineAfter": 35,
+                "content": "    - name: Log the result."
+              },
+              {
+                "type": "UnchangedLine",
+                "lineBefore": 45,
+                "lineAfter": 36,
+                "content": "      uses: actions/github-script@v6"
+              }
+            ]
+          }
+        ],
+        "path": ".github/workflows/diff.yml"
+      }
+    ]
+  }
+}
