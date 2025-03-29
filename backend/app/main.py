@@ -147,7 +147,7 @@ async def vulnerability_engine(
     prompt = PROMPT_TEMPLATE.format(json.dumps(diff))
 
     response = vuln_client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-1.5-flash",
         contents=prompt
     )
 
