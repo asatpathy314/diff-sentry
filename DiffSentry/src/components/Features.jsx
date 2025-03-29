@@ -111,7 +111,7 @@ const Features = () => {
               variants={itemVariants}
               className="card hover:shadow-lg transition-shadow"
             >
-              <div className="h-12 w-12 rounded-lg bg-primary bg-opacity-10 flex items-center justify-center text-primary mb-6">
+              <div className="h-12 w-12 mx-auto rounded-lg bg-primary bg-opacity-10 flex items-center justify-center text-primary mb-6">
                 {feature.icon}
               </div>
               <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
@@ -124,4 +124,4 @@ const Features = () => {
   );
 };
 
-export default Features; 
+export default Features;
