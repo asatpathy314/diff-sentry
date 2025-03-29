@@ -19,7 +19,7 @@ const Header = () => {
   };
 
   return (
-    <header className="relative fixed w-full bg-white bg-opacity-90 backdrop-blur-md shadow-sm dark:bg-[#24292e] dark:bg-opacity-90 z-50">
+    <header className="relative fixed w-full bg-white bg-opacity-90 backdrop-blur-md shadow-sm dark:bg-[#24292e] dark:bg-opacity-90 z-50" style={{ textShadow: '0px 0px 0.2px grey' }}>
       <div className="container-custom py-6"> {/* changed from py-4 to py-6 */}
         <div className="flex items-center">
           {/* Logo container: moved to absolute position */}

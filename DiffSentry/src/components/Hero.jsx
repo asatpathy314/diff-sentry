@@ -16,7 +16,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-6"
+            className="space-y-6 text-center"
           >
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary bg-opacity-10 text-primary text-sm font-medium">
               <span className="flex h-2 w-2 mr-2">
@@ -35,7 +35,7 @@ const Hero = () => {
               while allowing you to support open source projects with micro-donations.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row gap-4 pt-2 justify-center">
               <Motion.a 
                 href="#signup" 
                 whileHover={{ scale: 1.05 }}
@@ -118,4 +118,4 @@ const Hero = () => {
   );
 };
 
-export default Hero; 
+export default Hero;
