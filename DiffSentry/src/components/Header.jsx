@@ -19,16 +19,17 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed w-full bg-white bg-opacity-90 backdrop-blur-md shadow-sm dark:bg-[#24292e] dark:bg-opacity-90 z-50">
-      <div className="container-custom py-4">
+    <header className="relative fixed w-full bg-white bg-opacity-90 backdrop-blur-md shadow-sm dark:bg-[#24292e] dark:bg-opacity-90 z-50">
+      <div className="container-custom py-6"> {/* changed from py-4 to py-6 */}
         <div className="flex items-center">
+          {/* Logo container: moved to absolute position */}
           <Motion.div 
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: 0 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center space-x-2 mr-6"
+            className="absolute left-4 flex items-center space-x-2" 
           >
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-4">
               <div className="h-10 w-10 rounded-lg bg-[#0366d6] flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-white">
                   <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clipRule="evenodd" />
@@ -38,7 +39,8 @@ const Header = () => {
             </Link>
           </Motion.div>
           
-          <div className="hidden md:flex space-x-8">
+          {/* Updated Desktop Nav: flex-grow to center and increased spacing */}
+          <div className="hidden md:flex flex-grow justify-center space-x-16">
             <Motion.a 
               custom={1}
               initial="hidden"
@@ -81,7 +83,7 @@ const Header = () => {
             </Motion.div>
           </div>
 
-          <div className="flex items-center space-x-4 ml-auto">
+          <div className="absolute right-4 flex items-center space-x-6"> {/* Updated buttons container */}
             <Motion.a 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -128,16 +130,16 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Updated Mobile Menu: center align links */}
       {isMenuOpen && (
         <Motion.div 
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.3 }}
-          className="md:hidden py-4 bg-white dark:bg-gray-800 shadow-inner"
+          className="md:hidden py-6 bg-white dark:bg-gray-800 shadow-inner" 
         >
-          <div className="container-custom space-y-4">
+          <div className="container-custom text-center space-y-4">
             <Motion.a 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
@@ -203,4 +205,4 @@ const Header = () => {
   );
 };
 
-export default Header; 
+export default Header;

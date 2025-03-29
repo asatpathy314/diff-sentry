@@ -121,7 +121,6 @@ async def analyze_diff(
     request: Request,
     logger=Depends(get_request_logger)
 ):
-    # Log the content of the POST request
     try:
         data = await request.json()
         logger.info(
@@ -132,7 +131,10 @@ async def analyze_diff(
         # Log detailed data at debug level to avoid exposing sensitive info at higher levels
         logger.info(f"Diff data content: {data}")
         
+        await vulnerability_engine(data, logger)
+        
         return {"status": "received", "message": "Diff data logged"}
+    
     except Exception as e:
         logger.error(
             f"Error processing diff data: {str(e)}",
@@ -140,17 +142,16 @@ async def analyze_diff(
         )
         raise
 
+
 async def vulnerability_engine(
     diff: Dict,
-    logger=Depends(get_request_logger)
+    logger=None
 ):
     prompt = PROMPT_TEMPLATE.format(json.dumps(diff))
 
     response = vuln_client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-1.5-flash",
         contents=prompt
     )
 
     logger.info(f"{response.text}")
-
-    
