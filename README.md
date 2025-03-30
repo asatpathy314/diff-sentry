@@ -99,8 +99,6 @@ We welcome contributions! Here's how to get started:
 4. Push to the branch: `git push origin feature/your-feature-name`  
 5. Submit a pull request  
 
-Please follow the [Code of Conduct](CODE_OF_CONDUCT.md) and adhere to our [Contribution Guidelines](CONTRIBUTING.md).
-
 ## Roadmap
 
 - [ ] Expanded payment gateway support (Stripe, PayPal, etc.)  
