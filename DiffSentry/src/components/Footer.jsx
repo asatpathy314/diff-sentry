@@ -7,7 +7,7 @@ const Footer = () => {
     <div className="w-full bg-gray-900 mt-0 -mb-1">
       <footer className="bg-gray-900 text-white py-12 w-full">
         <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Company Info */}
             <Motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -19,7 +19,7 @@ const Footer = () => {
               viewport={{ once: false, margin: "-100px" }}
               className="col-span-1 md:col-span-1"
             >
-              <div className="flex items-center space-x-2 mb-4">
+              <div className="flex justify-center items-center space-x-2 mb-4"> {/* changed */}
                 <a href="#" className="flex items-center space-x-2">
                   <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white">
@@ -55,6 +55,7 @@ const Footer = () => {
               </ul>
             </Motion.div>
             
+            {/* Resources */}
             <Motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -70,30 +71,9 @@ const Footer = () => {
               <ul className="space-y-2">
                 <li><a href="/docs" className="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
                 <li><a href="/api" className="text-gray-400 hover:text-white transition-colors">API Reference</a></li>
-                <li><a href="/tutorials" className="text-gray-400 hover:text-white transition-colors">Tutorials</a></li>
-                <li><a href="/support" className="text-gray-400 hover:text-white transition-colors">Support</a></li>
-                <li><a href="/status" className="text-gray-400 hover:text-white transition-colors">Status</a></li>
-              </ul>
-            </Motion.div>
-            
-            <Motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.7, 
-                delay: 0.3, 
-                ease: [0.22, 1, 0.36, 1] 
-              }}
-              viewport={{ once: false, margin: "-100px" }}
-              className="col-span-1"
-            >
-              <h3 className="text-lg font-semibold mb-4">Company</h3>
-              <ul className="space-y-2">
-                <li><a href="/about" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
-                <li><a href="/careers" className="text-gray-400 hover:text-white transition-colors">Careers</a></li>
-                <li><a href="/press" className="text-gray-400 hover:text-white transition-colors">Press</a></li>
                 <li><a href="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
                 <li><a href="/legal" className="text-gray-400 hover:text-white transition-colors">Legal</a></li>
+                <li><a href="/tutorials" className="text-gray-400 hover:text-white transition-colors">Tutorials</a></li>
               </ul>
             </Motion.div>
           </div>
