@@ -44,6 +44,7 @@ Dangling Pointer
 Type Confusion
 Arbitrary Write
 Uninitialized Memory
+Race Condition
 
 Do not consider external factors, potential scenarios, or dependencies. Only report vulnerabilities that are demonstrably present within the given code.
 
