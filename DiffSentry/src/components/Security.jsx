@@ -155,7 +155,7 @@ const Security = () => {
             </div>
             
             <div className="pt-2">
-              <a href="#signup" className="btn-primary text-xl">
+              <a href="#signup" className="btn-primary">
                 Start Protecting Your Code
               </a>
             </div>

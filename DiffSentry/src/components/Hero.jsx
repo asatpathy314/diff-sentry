@@ -100,11 +100,11 @@ const Hero = () => {
                       </div>
                     </div>
                     
-                    <div className="rounded bg-success bg-opacity-20 text-green-800 dark:text-green-400 p-4 text-sm border border-green-200 dark:border-green-900">
+                    <div className="rounded bg-success bg-opacity-20 text-green-800 dark:text-green-400 p-2 text-xs border border-green-200 dark:border-green-900">
                       ✓ Open source support donation configured
                     </div>
                     
-                    <div className="rounded bg-danger bg-opacity-20 text-red-800 dark:text-red-400 p-4 text-sm border border-red-200 dark:border-red-900">
+                    <div className="rounded bg-danger bg-opacity-20 text-red-800 dark:text-red-400 p-2 text-xs border border-red-200 dark:border-red-900">
                       ⚠ Potential vulnerability in dependency: libcrypto@1.2.3
                     </div>
                   </div>
