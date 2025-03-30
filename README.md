@@ -13,19 +13,6 @@ DiffSentry creates a sustainable support system for open source projects by:
 
 ## Features
 
-### Getting Started with Diff Sentry's CI
-
-Our number one goal with this project is to make integrating vulnerability scanning
-into your pipeline as pain free as possible. Which is why you can add it to your repo in 
-just three steps.
-
-1. Create a `.github` folder at the root of your respository.
-2. Create a `workflows` folder in the `.github` folder.
-3. Copy the file in `CI/sentry.yml` into your `workflows` folder.
-
-Now you're done, and on every PR or commit to main DiffSentry will run our entire
-vulnerability detection engine on the changes.
-
 ### Vulnerability Scanning
 
 Our CI security features include:
@@ -99,6 +86,8 @@ Start the development server.
 ```bash
 fastapi dev app/main.py
 ```
+
+### Self-Hosting
 
 ## Contributing
 

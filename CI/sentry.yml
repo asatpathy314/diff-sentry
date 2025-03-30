@@ -36,7 +36,6 @@ jobs:
           const fsSync = require('fs');
           
           try {
-            // Read the diff file - fs.readFileSync is actually synchronous but we'll use async version for consistency
             const diffContent = fsSync.readFileSync('diff.json', 'utf8');
             
             // Prepare the request data
@@ -70,11 +69,11 @@ jobs:
               const analysis = responseData.analysis || 'No analysis provided';
               
               // Create status emoji and text
-              const statusEmoji = status === 'failing' ? '⚠️' : '✅';
+              const statusEmoji = status === 'failing' ? '❌' : '✅';
               const statusText = status === 'failing' ? 'FAILING' : 'PASSING';
               
               // Create comment body
-              const body = `\#\# DiffSentry Security Scan Results\n\n**Status**: ${statusEmoji} ${statusText}\n\n\#\#\# Vulnerability Analysis\n\n${analysis}\n\n${status === 'failing' ? '⚠️ **Warning**: Potential security vulnerabilities detected!' : '✅ No critical security issues found.'}`;
+              const body = `\#\# DiffSentry Security Scan Results\n\n**Status**: ${statusEmoji} ${statusText}\n\n\#\#\# Vulnerability Analysis\n\n${analysis}\n\n${status === 'failing' ? '❌ **Warning**: Potential security vulnerabilities detected!' : '✅ No critical security issues found.'}`;
               
               // Find existing comments by this action
               const comments = await github.rest.issues.listComments({
