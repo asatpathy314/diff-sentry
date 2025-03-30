@@ -23,8 +23,8 @@ const AboutUs = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
           <h1 className="text-[2.5rem] font-bold mt-8">About Us</h1>
           <p className="text-[1.2rem] mt-4">
-            We are a student-ran business for UVA students to thrift online and sell their clothes in an healthy and 
-            affordable manner, supporting the cause of second hand consumption.
+            DiffSentry is an open-source software designed to support other open source repositories by 
+            rounding up transactions for donations and scanning codebases for vulnerabilities.
           </p>
         </div>
       </div>
@@ -35,10 +35,24 @@ const AboutUs = () => {
         <div className="mb-8 bg-[#e2edff] p-8 rounded text-left">
           <h2 className="text-2xl font-bold text-gray-800">Making a Change</h2>
           <p className="mt-4 text-gray-500 leading-relaxed">
-            We are committed to meeting all external regulations where we do business and to doing the right thing. Acting consistently and with a strong ethical compass is vital if H&M Group is to continue being a trusted company and partner, a company that is valued by customers, respected by society, and for which we are all proud to work.
+            DiffSentry was born from a simple idea: what if every digital transaction could help support the open source ecosystem? 
+            Our platform allows users to round up their transactions and donate the spare change to open source projects they care about.
           </p>
           <p className="mt-4 text-gray-500 leading-relaxed">
-            The "Our way" document sums up H&M Group's culture, values, policies and guidelines. It defines who we are, what we do and how we do it.
+            By creating a sustainable funding model for open source, we help ensure that critical projects can continue to be maintained 
+            and improved, benefiting the entire tech community.
+          </p>
+        </div>
+
+        {/* Security Scanning */}
+        <div className="mb-8 bg-[#ffe2e2] p-8 rounded text-left">
+          <h2 className="text-2xl font-bold text-gray-800">Protecting Open Source</h2>
+          <p className="mt-4 text-gray-500 leading-relaxed">
+            Beyond funding, DiffSentry is committed to the security of the open source ecosystem. Our advanced scanning tools 
+            automatically detect vulnerabilities in repositories, helping maintainers identify and fix security issues before they can be exploited.
+          </p>
+          <p className="mt-4 text-gray-500 leading-relaxed">
+            By combining financial support with security enhancement, we're creating a stronger, more secure open source community for everyone.
           </p>
         </div>
 
