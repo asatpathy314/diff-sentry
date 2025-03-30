@@ -2,7 +2,7 @@ import { motion as Motion } from 'framer-motion';
 
 const Security = () => {
   return (
-    <section id="security" className="section bg-white dark:bg-gray-800">
+    <section id="security" className="section bg-white dark:bg-gray-800 scroll-mt-32">
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Image/Animation Side */}

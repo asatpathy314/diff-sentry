@@ -2,7 +2,7 @@ import { motion as Motion } from 'framer-motion';
 
 const Donations = () => {
   return (
-    <section id="donations" className="section bg-gray-50 dark:bg-gray-900">
+    <section id="donations" className="section bg-gray-50 dark:bg-gray-900 scroll-mt-32">
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}

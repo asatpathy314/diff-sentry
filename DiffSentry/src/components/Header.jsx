@@ -1,9 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion as Motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+  const getUrlPrefix = () => {
+    return isHomePage ? '' : '/';
+  };
+
+  // Handle smooth scrolling for anchor links
+  useEffect(() => {
+    const handleAnchorClick = (e) => {
+      const target = e.target.closest('a');
+      if (!target) return;
+      
+      const href = target.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      
+      e.preventDefault();
+      const id = href.substring(1);
+      const element = document.getElementById(id);
+      
+      if (element) {
+        // Close mobile menu if open
+        if (isMenuOpen) {
+          setIsMenuOpen(false);
+        }
+        
+        // Scroll the element into view with offset
+        const yOffset = -120; // Adjust this value based on your header height
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        
+        window.scrollTo({
+          top: y,
+          behavior: 'smooth'
+        });
+      }
+    };
+    
+    document.addEventListener('click', handleAnchorClick);
+    return () => document.removeEventListener('click', handleAnchorClick);
+  }, [isMenuOpen]);
 
   const navItemVariants = {
     hidden: { opacity: 0, y: -10 },
@@ -19,7 +58,7 @@ const Header = () => {
   };
 
   return (
-    <header className="relative fixed w-full bg-white bg-opacity-90 backdrop-blur-md shadow-sm dark:bg-[#24292e] dark:bg-opacity-90 z-50">
+    <header className="fixed top-0 w-full bg-white bg-opacity-90 backdrop-blur-md shadow-sm dark:bg-[#24292e] dark:bg-opacity-90 z-50">
       <div className="container-custom py-6"> 
         <div className="flex items-center">
           <Motion.div 
@@ -46,12 +85,12 @@ const Header = () => {
               animate="visible"
               variants={navItemVariants}
             >
-              <Link 
-                to="/#features" 
+              <a 
+                href={`${getUrlPrefix()}#features`} 
                 className="font-medium hover:text-[#0366d6] transition-colors"
               >
                 Features
-              </Link>
+              </a>
             </Motion.div>
             <Motion.div 
               custom={2}
@@ -59,12 +98,12 @@ const Header = () => {
               animate="visible"
               variants={navItemVariants}
             >
-              <Link 
-                to="/#security" 
+              <a 
+                href={`${getUrlPrefix()}#security`} 
                 className="font-medium hover:text-[#0366d6] transition-colors"
               >
                 Security
-              </Link>
+              </a>
             </Motion.div>
             <Motion.div 
               custom={3}
@@ -72,12 +111,12 @@ const Header = () => {
               animate="visible"
               variants={navItemVariants}
             >
-              <Link 
-                to="/#donations"
+              <a 
+                href={`${getUrlPrefix()}#donations`}
                 className="font-medium hover:text-[#0366d6] transition-colors"
               >
                 Donations
-              </Link>
+              </a>
             </Motion.div>
             <Motion.div
               custom={4}
@@ -153,36 +192,36 @@ const Header = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1, duration: 0.3 }}
             >
-              <Link
-                to="/#features" 
+              <a 
+                href={`${getUrlPrefix()}#features`} 
                 className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
               >
                 Features
-              </Link>
+              </a>
             </Motion.div>
             <Motion.div 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.15, duration: 0.3 }}
             >
-              <Link
-                to="/#security" 
+              <a 
+                href={`${getUrlPrefix()}#security`} 
                 className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
               >
                 Security
-              </Link>
+              </a>
             </Motion.div>
             <Motion.div 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.3 }}
             >
-              <Link
-                to="/#donations" 
+              <a 
+                href={`${getUrlPrefix()}#donations`} 
                 className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
               >
                 Donations
-              </Link>
+              </a>
             </Motion.div>
             <Motion.div 
               initial={{ opacity: 0, x: -10 }}

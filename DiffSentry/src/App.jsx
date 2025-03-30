@@ -13,17 +13,19 @@ function App() {
     <Router>
       <div className="min-h-screen flex flex-col overflow-hidden max-w-full">
         <Header />
-        <Routes>
-          <Route path="/" element={
-            <main className="flex-grow">
-              <Hero />
-              <Features />
-              <Security />
-              <Donations />
-            </main>
-          } />
-          <Route path="/documentation" element={<Documentation />} />
-        </Routes>
+        <div className="pt-24">
+          <Routes>
+            <Route path="/" element={
+              <main className="flex-grow">
+                <Hero />
+                <Features />
+                <Security />
+                <Donations />
+              </main>
+            } />
+            <Route path="/documentation" element={<Documentation />} />
+          </Routes>
+        </div>
         <Footer />
       </div>
     </Router>
