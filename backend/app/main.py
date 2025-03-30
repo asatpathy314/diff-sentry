@@ -157,7 +157,6 @@ async def analyze_diff(request: Request, logger=Depends(get_request_logger)):
             return {
                 "status": "failing",
                 "analysis": vulnerability_analysis,
-                "classification": test_is_failing,
             }
         else:
             if test_is_failing.lower() != "yes":
@@ -167,7 +166,6 @@ async def analyze_diff(request: Request, logger=Depends(get_request_logger)):
             return {
                 "status": "passing",
                 "analysis": vulnerability_analysis,
-                "classification": test_is_failing,
             }
 
     except Exception as e:
