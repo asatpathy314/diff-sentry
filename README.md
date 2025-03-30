@@ -46,7 +46,7 @@ DiffSentry's Chrome Extension allows users to:
 
 This creates a sustainable funding model for critical open source projects that form the backbone of our world's digital infrastructure.
 
-## Getting Started
+## Running the Frontend and API Locally
 
 ### Prerequisites
 - Node.js (v22 or higher)
