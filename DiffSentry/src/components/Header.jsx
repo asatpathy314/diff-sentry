@@ -145,7 +145,7 @@ const Header = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              href="#signup" 
+              href="https://github.com/asatpathy314/diff-sentry" 
               className="hidden md:inline-flex btn-primary"
             >
               Get Started

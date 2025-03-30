@@ -37,7 +37,7 @@ const Hero = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 pt-2 justify-center">
               <Motion.a 
-                href="#signup" 
+                href="https://github.com/asatpathy314/diff-sentry" 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-primary text-center py-3"
