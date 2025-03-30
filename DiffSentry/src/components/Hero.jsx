@@ -58,12 +58,12 @@ const Hero = () => {
             </div>
             
             <div className="mt-6 pt-6 border-t border-gray-300 dark:border-gray-700">
-              <p className="text-sm text-gray-500 mb-2">Trusted by engineering teams at</p>
-              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mt-"> {/* added mt-4 */}
-                <img src="https://placehold.co/120x30/DDDDDD/999999?text=GitPub" alt="GitPub" className="h-6 opacity-60 hover:opacity-100 transition" />
-                <img src="https://placehold.co/120x30/DDDDDD/999999?text=FordVPN" alt="FordVPN" className="h-6 opacity-60 hover:opacity-100 transition" />
-                <img src="https://placehold.co/120x30/DDDDDD/999999?text=CanesStreet" alt="CanesStreet" className="h-6 opacity-60 hover:opacity-100 transition" />
-                <img src="https://placehold.co/120x30/DDDDDD/999999?text=CoStart" alt="CoStart" className="h-6 opacity-60 hover:opacity-100 transition" />
+              <p className="text-base text-gray-700 mb-2">Trusted by engineering teams at</p>
+              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mt-4">
+                <img src="https://placehold.co/150x40/DDDDDD/333333?text=GitPub" alt="GitPub" className="h-8 opacity-60 hover:opacity-100 transition translate-y-1" />
+                <img src="https://placehold.co/150x40/DDDDDD/333333?text=FordVPN" alt="FordVPN" className="h-8 opacity-60 hover:opacity-100 transition translate-y-1" />
+                <img src="https://placehold.co/150x40/DDDDDD/333333?text=CanesStreet" alt="CanesStreet" className="h-8 opacity-60 hover:opacity-100 transition translate-y-1" />
+                <img src="https://placehold.co/150x40/DDDDDD/333333?text=CoStart" alt="CoStart" className="h-8 opacity-60 hover:opacity-100 transition translate-y-1" />
               </div>
             </div>
           </Motion.div>
@@ -100,11 +100,11 @@ const Hero = () => {
                       </div>
                     </div>
                     
-                    <div className="rounded bg-success bg-opacity-20 text-green-800 dark:text-green-400 p-2 border border-green-200 dark:border-green-900">
+                    <div className="rounded bg-success bg-opacity-20 text-green-800 dark:text-green-400 p-4 text-sm border border-green-200 dark:border-green-900">
                       ✓ Open source support donation configured
                     </div>
                     
-                    <div className="rounded bg-danger bg-opacity-20 text-red-800 dark:text-red-400 p-2 border border-red-200 dark:border-red-900">
+                    <div className="rounded bg-danger bg-opacity-20 text-red-800 dark:text-red-400 p-4 text-sm border border-red-200 dark:border-red-900">
                       ⚠ Potential vulnerability in dependency: libcrypto@1.2.3
                     </div>
                   </div>

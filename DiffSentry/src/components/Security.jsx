@@ -22,7 +22,7 @@ const Security = () => {
                   <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded-t flex items-center">
                     <div className="flex space-x-1.5">
                       <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>  
                       <div className="w-3 h-3 rounded-full bg-green-500"></div>
                     </div>
                     <div className="mx-auto text-xs text-gray-500">libzma_case_study.md</div>
@@ -97,7 +97,7 @@ const Security = () => {
             viewport={{ once: true }}
             className="order-1 lg:order-2 space-y-6"
           >
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-danger bg-opacity-10 text-danger text-sm font-medium">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-danger bg-opacity-10 text-danger text-sm font-medium">
               Lessons from recent attacks
             </div>
             
