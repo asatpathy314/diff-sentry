@@ -43,4 +43,68 @@ Our security features include:
 
 ### Installation
 
-1. Clone the repository:
+Installation
+Clone the repository:
+git clone https://github.com/your-username/DiffSentry.git
+cd DiffSentry
+
+Install dependencies:
+npm install
+or
+yarn install
+
+Set up environment variables:
+Create a .env file in the root directory with the following values:
+
+ini
+Copy
+Edit
+MONGO_URI=your_mongodb_connection_string
+PAYMENT_API_KEY=your_payment_api_key
+SCANNER_API_KEY=your_scanner_api_key
+Start the development server:
+npm run dev
+or
+yarn dev
+
+Your app should now be running at http://localhost:3000.
+
+Contributing
+We welcome contributions! Here's how to get started:
+
+Fork the repository
+
+Create a new branch: git checkout -b feature/your-feature-name
+
+Commit your changes: git commit -m "Add your feature"
+
+Push to the branch: git push origin feature/your-feature-name
+
+Submit a pull request
+
+Please follow the Code of Conduct and adhere to our Contribution Guidelines.
+
+Roadmap
+ GitHub OAuth Integration
+
+ Expanded payment gateway support (Stripe, PayPal, etc.)
+
+ Improved dashboard with visual analytics
+
+ Community ranking system for project impact
+
+ AI-assisted vulnerability triage
+
+ Localization support
+
+License
+This project is licensed under the MIT License.
+
+Acknowledgements
+Thanks to all open source maintainers and contributors whose work powers the internet.
+
+Inspired by the vision of a more sustainable, secure, and community-driven software future.
+
+
+
+2.
