@@ -6,6 +6,7 @@ import Security from './components/Security';
 import Donations from './components/Donations';
 import Documentation from './components/Documentation';
 import AboutUs from './components/AboutUs';
+import TermsOfService from './components/TermsOfService';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -26,6 +27,7 @@ function App() {
             } />
             <Route path="/documentation" element={<Documentation />} />
             <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/terms" element={<TermsOfService />} />
           </Routes>
         </div>
         <Footer />

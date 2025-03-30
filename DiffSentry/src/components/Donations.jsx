@@ -69,7 +69,7 @@ const Donations = () => {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn-secondary text-xl px-6 py-3"
-                title="This would link to the actual Chrome extension once published"
+                title="This links to your Chrome extensions page"
               >
                 Start Supporting Open Source
               </a>
