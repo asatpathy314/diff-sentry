@@ -1,4 +1,5 @@
 import { motion as Motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -147,9 +148,9 @@ const Footer = () => {
               </p>
             </div>
             <div className="mt-4 md:mt-0 flex space-x-6">
-              <a href="/privacy" className="text-sm text-gray-500 hover:text-gray-400 transition-colors">
+              <Link to="/privacy" className="text-sm text-gray-500 hover:text-gray-400 transition-colors">
                 Privacy Policy
-              </a>
+              </Link>
               <a href="/terms" className="text-sm text-gray-500 hover:text-gray-400 transition-colors">
                 Terms of Service
               </a>
