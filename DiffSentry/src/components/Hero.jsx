@@ -45,7 +45,7 @@ const Hero = () => {
                 Get Started for Free
               </Motion.a>
               <Motion.a 
-                href="loom.com/share/191765b7ddc54879ab1fbb86fae2f6fe" 
+                href="https://loom.com/share/191765b7ddc54879ab1fbb86fae2f6fe" 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center justify-center py-3 px-4 border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition"
