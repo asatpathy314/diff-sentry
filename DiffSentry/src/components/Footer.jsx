@@ -51,7 +51,7 @@ const Footer = () => {
                 <li><a href="#features" className="text-gray-400 hover:text-white transition-colors">Features</a></li>
                 <li><a href="#security" className="text-gray-400 hover:text-white transition-colors">Security Scanning</a></li>
                 <li><a href="#donations" className="text-gray-400 hover:text-white transition-colors">Micro-Donations</a></li>
-                <li><a href="#integrations" className="text-gray-400 hover:text-white transition-colors">Integrations</a></li>
+                <li><a href="#https://www.linkedin.com/in/brady-park-9a5469208/" className="text-gray-400 hover:text-white transition-colors">Integrations</a></li>
               </ul>
             </Motion.div>
             
@@ -153,7 +153,7 @@ const Footer = () => {
               <a href="/terms" className="text-sm text-gray-500 hover:text-gray-400 transition-colors">
                 Terms of Service
               </a>
-              <a href="/cookies" className="text-sm text-gray-500 hover:text-gray-400 transition-colors">
+              <a href="https://crumblcookies.com/" className="text-sm text-gray-500 hover:text-gray-400 transition-colors">
                 Cookie Policy
               </a>
             </div>
