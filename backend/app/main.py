@@ -47,7 +47,7 @@ Uninitialized Memory
 
 Do not consider external factors, potential scenarios, or dependencies. Only report vulnerabilities that are demonstrably present within the given code.
 
-Here is the code diff. Note that it is sorted by file name, and further organized by whether they were lines that are added to the code, deleted from the code
+Here is the code diff. Note that it is sorted by file name, and further organized by whether they were lines that are added to the code, deleted from the code, or otherwise unchanged:
 {}
 """
 
