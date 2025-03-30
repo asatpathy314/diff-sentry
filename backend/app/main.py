@@ -153,13 +153,13 @@ async def analyze_diff(request: Request, logger=Depends(get_request_logger)):
         vulnerability_analysis = await vulnerability_engine(diff, logger)
         test_is_failing = await classification_engine(vulnerability_analysis, logger)
 
-        if test_is_failing.lower() == "yes":
+        if test_is_failing.strip().lower() == "yes":
             return {
                 "status": "failing",
                 "analysis": vulnerability_analysis,
             }
         else:
-            if test_is_failing.lower() != "no":
+            if test_is_failing.strip().lower() != "no":
                 logger.warning(
                     f"Classification engine returned non-yes-no answer: {test_is_failing}"
                 )
