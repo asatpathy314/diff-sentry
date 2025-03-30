@@ -64,7 +64,6 @@ CLASSIFICATION_TEMPLATE = """You are a cybersecurity professional, analyzing the
 """
 
 vuln_client = genai.Client(api_key=GEMINI_API_KEY)
-github_client = Github(Auth.Token(os.getenv("GITHUB_TOKEN")))
 
 
 # Configure logging
@@ -146,17 +145,22 @@ async def analyze_diff(
         logger.info(f"Diff data content: {diff}")
         
         vulnerability_analysis = await vulnerability_engine(diff, logger)
-
-        repo_name = diff["metadata"]["repo"]
-
         test_is_failing = await classification_engine(vulnerability_analysis, logger)
         
-        if test_is_failing == "no":
-            return {"status": "failing"}
+        if test_is_failing.lower() == "no":
+            return {
+                "status": "failing",
+                "analysis": vulnerability_analysis,
+                "classification": test_is_failing
+            }
         else:
-            if test_is_failing != "yes":
+            if test_is_failing.lower() != "yes":
                 logger.warning(f"Classification engine returned non-yes-no answer: {test_is_failing}")
-            return {"status": "passing"}
+            return {
+                "status": "passing",
+                "analysis": vulnerability_analysis,
+                "classification": test_is_failing
+            }
     
     except Exception as e:
         logger.error(
@@ -164,6 +168,7 @@ async def analyze_diff(
             exc_info=True
         )
         raise
+
 
 
 async def classification_engine(
