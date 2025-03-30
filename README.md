@@ -8,39 +8,37 @@ DiffSentry is an open-source platform designed to support and secure the open so
 ## Overview
 
 DiffSentry creates a sustainable support system for open source projects by:
-1. Rounding up financial transactions and directing the difference to open source projects
-2. Providing automated security scanning to identify vulnerabilities in repositories
+1. Providing completely free automated security scanning to identify vulnerabilities in repositories
+2. Rounding up financial transactions and directing the difference to open source projects
 
 ## Features
 
+### Vulnerability Scanning
+
+Our CI security features include:
+- Automated code scanning to detect common vulnerabilities
+- Detailed reports highlighting security issues
+- Prioritization of vulnerabilities based on severity
+- Explanations of how vulnerabilities can be fixed
+- Suggestions for remediation steps
+- Integration with common development workflows
+
 ### Transaction Rounding & Donations
 
-DiffSentry allows users to:
+DiffSentry's Chrome Extension allows users to:
 - Connect their payment accounts securely
 - Round up transactions to the nearest dollar (or other unit)
 - Direct the spare change to open source projects of their choice
 - Track their contribution history and impact
-- Set monthly donation limits and preferences
 
-This creates a sustainable funding model for critical open source projects that form the backbone of our digital infrastructure.
-
-### Vulnerability Scanning
-
-Our security features include:
-- Automated code scanning to detect common vulnerabilities
-- Regular scans of connected repositories
-- Detailed reports highlighting security issues
-- Prioritization of vulnerabilities based on severity
-- Suggestions for remediation steps
-- Integration with common development workflows
+This creates a sustainable funding model for critical open source projects that form the backbone of our world's digital infrastructure.
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
-- MongoDB (for data storage)
-- API keys for payment processing (if using transaction rounding feature)
+- Node.js (v22 or higher)
+- Python 3.13.2 
+- API keys for Gemini API
 
 ### Installation
 
@@ -57,14 +55,6 @@ npm install
 yarn install
 ```
 
-Set up environment variables:  
-Create a `.env` file in the root directory with the following values:
-```ini
-MONGO_URI=your_mongodb_connection_string
-PAYMENT_API_KEY=your_payment_api_key
-SCANNER_API_KEY=your_scanner_api_key
-```
-
 Start the development server:
 ```bash
 npm run dev
@@ -72,7 +62,30 @@ npm run dev
 yarn dev
 ```
 
-Your app should now be running at `http://localhost:3000`.
+Your app should now be running at `http://localhost:5173`.
+
+```bash
+cd ..
+cd backend
+```
+
+Create a conda environment (or venv if you prefer).
+
+```bash
+conda create -n "diff-sentry" python=3.13.2
+```
+
+Set the environment variables.
+
+```bash
+export GEMINI_API_KEY=APIKEY
+```
+
+Start the development server.
+
+```bash
+fastapi dev app/main.py
+```
 
 ## Contributing
 
@@ -88,18 +101,17 @@ Please follow the [Code of Conduct](CODE_OF_CONDUCT.md) and adhere to our [Contr
 
 ## Roadmap
 
-- [ ] GitHub OAuth Integration  
 - [ ] Expanded payment gateway support (Stripe, PayPal, etc.)  
 - [ ] Improved dashboard with visual analytics  
 - [ ] Community ranking system for project impact  
 - [ ] AI-assisted vulnerability triage  
-- [ ] Localization support  
+- [ ] Adding more agents to the CI pipeline.
+- [ ] Diffhunk support on PR comments.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GPL-3.0 License](LICENSE).
 
 ## Acknowledgements
-
 - Thanks to all open source maintainers and contributors whose work powers the internet.  
 - Inspired by the vision of a more sustainable, secure, and community-driven software future.
