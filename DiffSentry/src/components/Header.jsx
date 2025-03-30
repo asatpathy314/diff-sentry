@@ -128,6 +128,16 @@ const Header = () => {
                 Documentation
               </Link>
             </Motion.div>
+            <Motion.div
+              custom={5}
+              initial="hidden"
+              animate="visible"
+              variants={navItemVariants}
+            >
+              <Link to="/aboutus" className="font-medium hover:text-[#0366d6] transition-colors">
+                About Us
+              </Link>
+            </Motion.div>
           </div>
 
           <div className="absolute right-4 flex items-center space-x-6"> 
@@ -144,7 +154,7 @@ const Header = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
-              href="https://github.com/diffsentry" 
+              href="https://github.com/asatpathy314/diff-sentry" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="hidden md:flex items-center"
@@ -236,9 +246,21 @@ const Header = () => {
               </Link>
             </Motion.div>
             <Motion.div 
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.3 }}
+            >
+              <Link 
+                to="/aboutus" 
+                className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
+              >
+                About Us
+              </Link>
+            </Motion.div>
+            <Motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.3 }}
+              transition={{ delay: 0.35, duration: 0.3 }}
               className="pt-2 flex flex-col space-y-2"
             >
               <a href="#signup" className="btn-primary text-center">Get Started</a>
