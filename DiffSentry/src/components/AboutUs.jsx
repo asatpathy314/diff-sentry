@@ -7,6 +7,7 @@ import abhishekImg from './images/abhisheksatpathy.jpeg';
 import austinImg from './images/austinsong.jpg';
 import bradyImg from './images/bradypark.jpg';
 import kyleImg from './images/kylevitayanuvatti.jpeg';
+import heroImg from './images/diffsentryhero.png';
 
 const teamMembers = [
   { name: 'Abhishek Satpathy', img: abhishekImg },
@@ -17,11 +18,21 @@ const teamMembers = [
 
 const AboutUs = () => {
   return (
-    <section className="pt-16 pb-16 relative flex flex-col items-center justify-center w-full min-h-screen mx-auto">
+    <section className="pb-16 relative flex flex-col items-center justify-center w-full min-h-screen mx-auto">
       {/* Hero Section */}
-      <div className="relative w-full h-[65vh] overflow-hidden bg-gradient-to-r from-gray-800 to-gray-900">
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
-          <h1 className="text-[2.5rem] font-bold mt-8">About Us</h1>
+      <div className="relative w-full aspect-[1920/1200] overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0"
+          style={{ backgroundImage: `url(${heroImg})` }}
+        />
+        
+        {/* Semi-transparent Overlay */}
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-gray-800 to-gray-900 opacity-70 z-10"></div>
+        
+        {/* Content */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white z-20">
+          <h1 className="text-[2.5rem] font-bold">About Us</h1>
           <p className="text-[1.2rem] mt-4">
             DiffSentry is an open-source software designed to support other open source repositories by 
             rounding up transactions for donations and scanning codebases for vulnerabilities.
@@ -59,10 +70,10 @@ const AboutUs = () => {
         {/* Our Team */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-800">The Team</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 max-w-[700px] mx-auto">
             {teamMembers.map((member, index) => (
               <div key={index} className="bg-white p-5 rounded shadow-md text-center">
-                <img src={member.img} alt={member.name} className="w-full h-auto rounded-full" />
+                <img src={member.img} alt={member.name} className="w-[150px] h-[150px] rounded-full mx-auto object-cover" />
                 <h3 className="mt-2 text-lg font-bold">{member.name}</h3>
               </div>
             ))}
