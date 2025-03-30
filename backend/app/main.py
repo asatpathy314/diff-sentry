@@ -7,11 +7,14 @@ from fastapi import FastAPI, Request, Depends, HTTPException
 from google import genai
 import json
 from collections import OrderedDict
+from github import Github
+from github import Auth
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
 PROMPT_TEMPLATE = """Analyze the following diff snippet solely based on its content. Identify and report only directly observable security vulnerabilities within the code itself, focusing on the following vulnerability categories:
 
+### Types of Vulnerabilities to Consider
 Injection
 Broken Authentication
 Sensitive data exposure
@@ -49,10 +52,20 @@ Race Condition
 Do not consider external factors, potential scenarios, or dependencies. Only report vulnerabilities that are demonstrably present within the given code.
 
 Here is the code diff. Note that it is sorted by file name, and further organized by whether they were lines that are added to the code, deleted from the code, or otherwise unchanged:
+
+# Code Diff
+{}
+"""
+
+CLASSIFICATION_TEMPLATE = """You are a cybersecurity professional, analyzing the security vulnerability report on the code difference after a GitHub commit. Please respond to this prompt by first reading through the report below and ultimately determining whether there are any urgent vulnerabilities that need to be addressed and can be addressed immediately. RESPOND ONLY WITH YES or NO.
+
+### Code
 {}
 """
 
 vuln_client = genai.Client(api_key=GEMINI_API_KEY)
+github_client = Github(Auth.Token(os.getenv("GITHUB_TOKEN")))
+
 
 # Configure logging
 logging.basicConfig(
@@ -123,18 +136,27 @@ async def analyze_diff(
     logger=Depends(get_request_logger)
 ):
     try:
-        data = await request.json()
+        diff = await request.json()
         logger.info(
             "Received diff data",
-            extra={"data_size": len(str(data)), "data_type": type(data).__name__}
+            extra={"data_size": len(str(diff)), "data_type": type(diff).__name__}
         )
         
         # Log detailed data at debug level to avoid exposing sensitive info at higher levels
-        logger.info(f"Diff data content: {data}")
+        logger.info(f"Diff data content: {diff}")
         
-        await vulnerability_engine(data, logger)
+        vulnerability_analysis = await vulnerability_engine(diff, logger)
+
+        repo_name = diff["metadata"]["repo"]
+
+        test_is_failing = await classification_engine(vulnerability_analysis, logger)
         
-        return {"status": "received", "message": "Diff data logged"}
+        if test_is_failing == "no":
+            return {"status": "failing"}
+        else:
+            if test_is_failing != "yes":
+                logger.warning(f"Classification engine returned non-yes-no answer: {test_is_failing}")
+            return {"status": "passing"}
     
     except Exception as e:
         logger.error(
@@ -142,6 +164,23 @@ async def analyze_diff(
             exc_info=True
         )
         raise
+
+
+async def classification_engine(
+        gemini_response: str,
+        logger=None
+):
+    prompt = CLASSIFICATION_TEMPLATE.format(gemini_response)
+
+    response = vuln_client.models.generate_content(
+        model="gemini-1.5-flash",
+        contents=prompt
+    )
+
+    if logger:
+        logger.info(f"{response.text}")
+
+    return response.text
 
 
 async def vulnerability_engine(
@@ -159,16 +198,11 @@ async def vulnerability_engine(
     if logger:
         logger.info(f"{response.text}")
 
-def parse_diff_json(input_data): # returns a string
+    return response.text
+
+async def parse_diff_json(input_data): # returns a string
     """Parse diff data from either a dictionary or file path"""
-    # Determine input type
-    if isinstance(input_data, str):
-        # Assume it's a file path
-        with open(input_data, 'r') as f:
-            data = json.load(f)
-    else:
-        # Assume it's already a dictionary
-        data = input_data
+    data = input_data
     
     diff_data = data['diff']['files']
     
