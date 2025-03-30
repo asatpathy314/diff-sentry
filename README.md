@@ -87,8 +87,6 @@ Start the development server.
 fastapi dev app/main.py
 ```
 
-### Self-Hosting
-
 ## Contributing
 
 We welcome contributions! Here's how to get started:
