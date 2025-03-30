@@ -202,7 +202,7 @@ async def vulnerability_engine(diff: Dict, logger=None):
     return response.text
 
 
-async def parse_diff_json(input_data):  # returns a string
+def parse_diff_json(input_data):  # returns a string
     """Parse diff data from either a dictionary or file path"""
     data = input_data
 
