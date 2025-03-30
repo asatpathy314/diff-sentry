@@ -5,6 +5,7 @@ import Features from './components/Features';
 import Security from './components/Security';
 import Donations from './components/Donations';
 import Documentation from './components/Documentation';
+import AboutUs from './components/AboutUs';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -24,6 +25,7 @@ function App() {
               </main>
             } />
             <Route path="/documentation" element={<Documentation />} />
+            <Route path="/aboutus" element={<AboutUs />} />
           </Routes>
         </div>
         <Footer />
