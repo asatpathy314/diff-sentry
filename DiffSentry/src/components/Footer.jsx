@@ -89,11 +89,11 @@ const Footer = () => {
             >
               <h3 className="text-lg font-semibold mb-4">Company</h3>
               <ul className="space-y-2">
-                <li><a href="/about" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
-                <li><a href="/careers" className="text-gray-400 hover:text  -white transition-colors">Careers</a></li>
-                <li><a href="/press" className="text-gray-400 hover:text-white transition-colors">Press</a></li>
-                <li><a href="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-                <li><a href="/legal" className="text-gray-400 hover:text-white transition-colors">Legal</a></li>
+                <li><a href="/aboutus" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                <li><a href="https://www.youtube.com/shorts/C7bLFSv-44I" className="text-gray-400 hover:text  -white transition-colors">Careers</a></li>
+                <li><a href="https://www.youtube.com/shorts/mNTrgtJb6WM" className="text-gray-400 hover:text-white transition-colors">Press</a></li>
+                <li><a href="https://www.youtube.com/shorts/vslOx15D8uk" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                <li><a href="https://www.youtube.com/shorts/_3nG3yxoTjY" className="text-gray-400 hover:text-white transition-colors">Legal</a></li>
               </ul>
             </Motion.div>
           </div>
