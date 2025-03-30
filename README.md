@@ -1,4 +1,4 @@
-![DiffSentry Logo](../src/components/images/diffsentryvert.png)
+![DiffSentry Logo](/DiffSentry/src/components/images/diffsentryvert.png)
 
 # DiffSentry
 
