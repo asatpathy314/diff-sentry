@@ -47,7 +47,7 @@ Uninitialized Memory
 
 Do not consider external factors, potential scenarios, or dependencies. Only report vulnerabilities that are demonstrably present within the given code.
 
-Here is the code diff. It is sorted by file name, and each change has a header addressing whether it has been added or removed from the file:
+Here is the code diff. Note that it is sorted by file name, and further organized by whether they were lines that are added to the code, deleted from the code
 {}
 """
 
@@ -158,57 +158,53 @@ async def vulnerability_engine(
     if logger:
         logger.info(f"{response.text}")
 
-def parse_diff_json(input_data):  # Modified to accept both file path or dict
+def parse_diff_json(input_data): # returns a string
+    """Parse diff data from either a dictionary or file path"""
+    # Determine input type
     if isinstance(input_data, str):
+        # Assume it's a file path
         with open(input_data, 'r') as f:
-            diff_data = json.load(f)
+            data = json.load(f)
     else:
-        diff_data = input_data
+        # Assume it's already a dictionary
+        data = input_data
     
-    organized = OrderedDict()
+    diff_data = data['diff']['files']
     
-    for filename, changes in diff_data.items():
-        file_changes = {
+    output = []
+    
+    for file in diff_data:
+        filename = file['path']
+        changes = {
             'added': [],
             'deleted': [],
             'unchanged': []
         }
         
-        for change_type in ['Added Lines', 'Deleted Lines', 'Unchanged Lines']:
-            lines = changes.get(change_type, [])
-            
-            for line in lines:
-                parts = line.split(':', 1)
-                if len(parts) == 2:
-                    line_num = parts[0].strip()
-                    code = parts[1].strip()
-                    entry = (int(line_num), code)
-                    
-                    if change_type == 'Added Lines':
-                        file_changes['added'].append(entry)
-                    elif change_type == 'Deleted Lines':
-                        file_changes['deleted'].append(entry)
-                    else:
-                        file_changes['unchanged'].append(entry)
-        for key in file_changes:
-            file_changes[key].sort(key=lambda x: x[0])
+        for chunk in file['chunks']:
+            for change in chunk['changes']:
+                if change['type'] == 'AddedLine':
+                    changes['added'].append((change['lineAfter'], change['content']))
+                elif change['type'] == 'DeletedLine':
+                    changes['deleted'].append((change['lineBefore'], change['content']))
+                elif change['type'] == 'UnchangedLine':
+                    changes['unchanged'].append((change['lineAfter'], change['content']))
         
-        organized[filename] = file_changes
-
-    output = []
-    
-    for filename, changes in organized.items():
-        output.append(f"### {filename}")
-        output.append("")
-        for change_type in ['added', 'deleted']:
+        output.append(f"File: {filename}\n")
+        
+        for change_type in ['added', 'deleted', 'unchanged']:
             if changes[change_type]:
                 if change_type == 'added':
-                    output.append(f"Here are the lines {change_type} to the code:")
+                    output.append("Here are the lines added to the code:")
+                elif change_type == 'deleted':
+                    output.append("Here are the lines deleted from the code:")
                 else:
-                    output.append(f"Here are the lines {change_type} from the code:")
-                for line_num, code in changes[change_type]:
-                    output.append(f"{line_num}: {code}")
-                output.append("")
-        output.append("")
+                    output.append("Here are the unchanged lines:")
+                
+                for line_num, content in sorted(changes[change_type], key=lambda x: x[0]):
+                    output.append(f"{line_num}: {content}")
+                output.append("\n")
+        
+        output.append("\n")
     
     return "\n".join(output).strip()
