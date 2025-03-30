@@ -1,19 +1,22 @@
 import React from 'react';
+import { useState } from 'react';
+import { motion as Motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const teamMembers = [
-  { name: 'Abhishek Satpathy', img: './images/abhisheksatpathy.jpeg' },
-  { name: 'Austin Song', img: './images/austinsong.jpeg' },
-  { name: 'Brady Park', img: './images/bradypark.jpeg' },
-  { name: 'Kyle Vitayanuvatti', img: './images/kylevitayanuvatti.jpeg' },   
+  { name: 'Abhishek Satpathy', img: '/images/abhisheksatpathy.jpeg' },
+  { name: 'Austin Song', img: '/images/austinsong.jpeg' },
+  { name: 'Brady Park', img: '/images/bradypark.jpeg' },
+  { name: 'Kyle Vitayanuvatti', img: '/images/kylevitayanuvatti.jpeg' },
 ];
 
 const AboutUs = () => {
   return (
-    <section className="relative flex flex-col items-center justify-center w-full h-screen mx-auto">
+    <section className="pt-16 pb-16 relative flex flex-col items-center justify-center w-full min-h-screen mx-auto">
       {/* Hero Section */}
       <div className="relative w-full h-[65vh] overflow-hidden">
         <img
-          src="./images/hero.png"
+          src={`${process.env.PUBLIC_URL}/images/hero.png`}
           alt="Hero"
           className="w-full h-full object-cover opacity-70 filter brightness-50"
         />
