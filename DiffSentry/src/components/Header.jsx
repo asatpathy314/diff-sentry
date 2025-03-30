@@ -19,10 +19,9 @@ const Header = () => {
   };
 
   return (
-    <header className="relative fixed w-full bg-white bg-opacity-90 backdrop-blur-md shadow-sm dark:bg-[#24292e] dark:bg-opacity-90 z-50" style={{ textShadow: '0px 0px 0.2px grey' }}>
-      <div className="container-custom py-6"> {/* changed from py-4 to py-6 */}
+    <header className="relative fixed w-full bg-white bg-opacity-90 backdrop-blur-md shadow-sm dark:bg-[#24292e] dark:bg-opacity-90 z-50">
+      <div className="container-custom py-6"> 
         <div className="flex items-center">
-          {/* Logo container: moved to absolute position */}
           <Motion.div 
             initial={{ opacity: 0, x: 0 }}
             animate={{ opacity: 1, x: 0 }}
@@ -39,38 +38,47 @@ const Header = () => {
             </Link>
           </Motion.div>
           
-          {/* Updated Desktop Nav: flex-grow to center and increased spacing */}
+
           <div className="hidden md:flex flex-grow justify-center space-x-16">
-            <Motion.a 
+            <Motion.div 
               custom={1}
               initial="hidden"
               animate="visible"
               variants={navItemVariants}
-              href="#features" 
-              className="font-medium hover:text-[#0366d6] transition-colors"
             >
-              Features
-            </Motion.a>
-            <Motion.a 
+              <Link 
+                to="/#features" 
+                className="font-medium hover:text-[#0366d6] transition-colors"
+              >
+                Features
+              </Link>
+            </Motion.div>
+            <Motion.div 
               custom={2}
               initial="hidden"
               animate="visible"
               variants={navItemVariants}
-              href="#security" 
-              className="font-medium hover:text-[#0366d6] transition-colors"
             >
-              Security
-            </Motion.a>
-            <Motion.a 
+              <Link 
+                to="/#security" 
+                className="font-medium hover:text-[#0366d6] transition-colors"
+              >
+                Security
+              </Link>
+            </Motion.div>
+            <Motion.div 
               custom={3}
               initial="hidden"
               animate="visible"
               variants={navItemVariants}
-              href="#donations" 
-              className="font-medium hover:text-[#0366d6] transition-colors"
             >
-              Donations
-            </Motion.a>
+              <Link 
+                to="/#donations"
+                className="font-medium hover:text-[#0366d6] transition-colors"
+              >
+                Donations
+              </Link>
+            </Motion.div>
             <Motion.div
               custom={4}
               initial="hidden"
@@ -83,7 +91,7 @@ const Header = () => {
             </Motion.div>
           </div>
 
-          <div className="absolute right-4 flex items-center space-x-6"> {/* Updated buttons container */}
+          <div className="absolute right-4 flex items-center space-x-6"> 
             <Motion.a 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -140,33 +148,42 @@ const Header = () => {
           className="md:hidden py-6 bg-white dark:bg-gray-800 shadow-inner" 
         >
           <div className="container-custom text-center space-y-4">
-            <Motion.a 
+            <Motion.div 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1, duration: 0.3 }}
-              href="#features" 
-              className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
             >
-              Features
-            </Motion.a>
-            <Motion.a 
+              <Link
+                to="/#features" 
+                className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
+              >
+                Features
+              </Link>
+            </Motion.div>
+            <Motion.div 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.15, duration: 0.3 }}
-              href="#security" 
-              className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
             >
-              Security
-            </Motion.a>
-            <Motion.a 
+              <Link
+                to="/#security" 
+                className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
+              >
+                Security
+              </Link>
+            </Motion.div>
+            <Motion.div 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.3 }}
-              href="#donations" 
-              className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
             >
-              Donations
-            </Motion.a>
+              <Link
+                to="/#donations" 
+                className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
+              >
+                Donations
+              </Link>
+            </Motion.div>
             <Motion.div 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
