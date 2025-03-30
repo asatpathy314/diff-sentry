@@ -61,15 +61,15 @@ const Documentation = () => {
                   curl -X POST https://api.diffsentry.com/v1/scan \
                     -H "Authorization: Bearer YOUR_API_KEY" \
                     -H "Content-Type: application/json" \
-                    -d '{
+                    -d {"{"} 
                       "diff": "...code diff content...",
                       "repo": "username/repository",
-                      "options": {
+                      "options": {"{"} 
                         "securityScan": true,
                         "performanceScan": true,
                         "qualityScan": true
-                      }
-                    }'
+                      {"}"}
+                    {"}"}
                 </code>
               </pre>
             </div>
