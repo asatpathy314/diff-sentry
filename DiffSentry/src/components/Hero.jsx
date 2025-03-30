@@ -105,7 +105,7 @@ const Hero = () => {
                     </div>
                     
                     <div className="rounded bg-danger bg-opacity-20 text-red-800 dark:text-red-400 p-2 text-xs border border-red-200 dark:border-red-900">
-                      ⚠ Potential vulnerability in dependency: libcrypto@1.2.3
+                      ⚠ Potential use after free vulnerability in engine.c!
                     </div>
                   </div>
                 </div>

@@ -69,11 +69,9 @@ const Footer = () => {
             >
               <h3 className="text-lg font-semibold mb-4">Resources</h3>
               <ul className="space-y-2">
-                <li><a href="/documentation" className="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="/api" className="text-gray-400 hover:text-white transition-colors">API Reference</a></li>
-                <li><a href="/tutorials" className="text-gray-400 hover:text-white transition-colors">Tutorials</a></li>
+                <li><a href="https://diff-sentry-backend-c77f0d5e98bc.herokuapp.com/docs" className="text-gray-400 hover:text-white transition-colors">API Reference</a></li>
                 <li><a href="https://www.linkedin.com/in/kyle-vitayanuvatti/" className="text-gray-400 hover:text-white transition-colors">Support</a></li>
-                <li><a href="https://www.linkedin.com/in/abhishek-satpathy-1b2b84270/" className="text-gray-400 hover:text-white transition-colors">Status</a></li>
+                <li><a href="https://diff-sentry-backend-c77f0d5e98bc.herokuapp.com/" className="text-gray-400 hover:text-white transition-colors">Status</a></li>
               </ul>
             </Motion.div>
             

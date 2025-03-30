@@ -26,7 +26,7 @@ const Donations = () => {
             
             <p className="text-lg text-gray-600 dark:text-gray-300">
               Enable spare change donations on your online purchases to support the open source projects 
-              you rely on. It's a simple way to strengthen the backbone of modern software.
+              you rely on. It's a simple way to support the ecosystem of modern software.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
@@ -37,7 +37,7 @@ const Donations = () => {
                 viewport={{ once: false, margin: "-100px" }}
                 className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700"
               >
-                <div className="text-3xl font-bold text-primary mb-2">82%</div>
+                <div className="text-3xl font-bold text-primary mb-2">72%</div>
                 <p className="text-gray-600 dark:text-gray-400">
                   of critical open source projects are maintained by just one or two developers
                 </p>
@@ -52,7 +52,7 @@ const Donations = () => {
               >
                 <div className="text-3xl font-bold text-primary mb-2">$2.5M+</div>
                 <p className="text-gray-600 dark:text-gray-400">
-                  distributed to open source maintainers through our donation platform
+                  projected donations to open source maintainers through our platform
                 </p>
               </Motion.div>
             </div>
