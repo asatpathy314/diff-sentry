@@ -144,7 +144,7 @@ const Header = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
-              href="https://github.com/diffsentry" 
+              href="https://github.com/asatpathy314/diff-sentry" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="hidden md:flex items-center"

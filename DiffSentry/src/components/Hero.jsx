@@ -9,7 +9,7 @@ const Hero = () => {
         <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-secondary rounded-full mix-blend-multiply filter blur-3xl"></div>
       </div>
       
-      <div className="container-custom relative z-10">
+      <div className="container-custom relative z-10 px-4 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Hero Text Content */}
           <Motion.div
@@ -18,7 +18,7 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
             className="space-y-6 text-center"
           >
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary bg-opacity-10 text-primary text-sm font-medium">
+            <div className="inline-flex items-center px-5 py-2 rounded-full bg-primary bg-opacity-10 text-primary text-sm font-medium">
               <span className="flex h-2 w-2 mr-2">
                 <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
