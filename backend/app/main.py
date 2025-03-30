@@ -6,7 +6,7 @@ import uuid
 from fastapi import FastAPI, Request, Depends, HTTPException
 from google import genai
 import json
-
+from collections import OrderedDict
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
@@ -47,7 +47,7 @@ Uninitialized Memory
 
 Do not consider external factors, potential scenarios, or dependencies. Only report vulnerabilities that are demonstrably present within the given code.
 
-Here is the code diff:
+Here is the code diff. It is sorted by file name, and each change has a header addressing whether it has been added or removed from the file:
 {}
 """
 
@@ -147,11 +147,68 @@ async def vulnerability_engine(
     diff: Dict,
     logger=None
 ):
-    prompt = PROMPT_TEMPLATE.format(json.dumps(diff))
+    diff_string = parse_diff_json(diff)
+    prompt = PROMPT_TEMPLATE.format(diff_string)
 
     response = vuln_client.models.generate_content(
         model="gemini-1.5-flash",
         contents=prompt
     )
 
-    logger.info(f"{response.text}")
+    if logger:
+        logger.info(f"{response.text}")
+
+def parse_diff_json(input_data):  # Modified to accept both file path or dict
+    if isinstance(input_data, str):
+        with open(input_data, 'r') as f:
+            diff_data = json.load(f)
+    else:
+        diff_data = input_data
+    
+    organized = OrderedDict()
+    
+    for filename, changes in diff_data.items():
+        file_changes = {
+            'added': [],
+            'deleted': [],
+            'unchanged': []
+        }
+        
+        for change_type in ['Added Lines', 'Deleted Lines', 'Unchanged Lines']:
+            lines = changes.get(change_type, [])
+            
+            for line in lines:
+                parts = line.split(':', 1)
+                if len(parts) == 2:
+                    line_num = parts[0].strip()
+                    code = parts[1].strip()
+                    entry = (int(line_num), code)
+                    
+                    if change_type == 'Added Lines':
+                        file_changes['added'].append(entry)
+                    elif change_type == 'Deleted Lines':
+                        file_changes['deleted'].append(entry)
+                    else:
+                        file_changes['unchanged'].append(entry)
+        for key in file_changes:
+            file_changes[key].sort(key=lambda x: x[0])
+        
+        organized[filename] = file_changes
+
+    output = []
+    
+    for filename, changes in organized.items():
+        output.append(f"### {filename}")
+        output.append("")
+        for change_type in ['added', 'deleted']:
+            if changes[change_type]:
+                if change_type == 'added':
+                    output.append(f"Here are the lines {change_type} to the code:")
+                else:
+                    output.append(f"Here are the lines {change_type} from the code:")
+                for line_num, code in changes[change_type]:
+                    output.append(f"{line_num}: {code}")
+                output.append("")
+        output.append("")
+    
+    return "\n".join(output).strip()

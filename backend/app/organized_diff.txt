@@ -1,0 +1,28 @@
+### file1.py
+
+Here are the lines added to the code
+25: def new_function():
+26: print('This is a new function')
+27: return True
+
+Here are the lines deleted from the code
+25: # TODO: Implement new function
+26: pass
+
+
+### file2.js
+
+Here are the lines added to the code
+10: const newVariable = 'Hello, World!';
+11: console.log(newVariable);
+
+Here are the lines deleted from the code
+10: // TODO: Add greeting
+
+
+### README.md
+
+Here are the lines added to the code
+5: ## New Feature
+6: This release includes a new greeting feature.
+
