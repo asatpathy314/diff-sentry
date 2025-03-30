@@ -124,7 +124,7 @@ const Header = () => {
               animate="visible"
               variants={navItemVariants}
             >
-              <Link to="/documentation" className="font-medium hover:text-[#0366d6] transition-colors">
+              <Link to="https://github.com/asatpathy314/diff-sentry/tree/main/CI" className="font-medium hover:text-[#0366d6] transition-colors">
                 Documentation
               </Link>
             </Motion.div>
