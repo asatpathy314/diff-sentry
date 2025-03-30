@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "Open Source Support",
+  "version": "1.0",
+  "description": "Round up your purchases and donate the difference to open source projects",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "notifications",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://localhost:5173/*"
+  ],
+  "externally_connectable": {
+    "matches": ["http://localhost:5173/*"]
+  },
+  "sandbox": {
+    "pages": [
+      "src/plaid-link.html"
+    ]
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "32": "assets/icon32.png",
+      "128": "assets/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["src/content.js"]
+    }
+  ],
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "128": "assets/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/plaid-link.html",
+        "src/plaid-link.js",
+        "src/plaid-container.html",
+        "src/plaid-container.js",
+        "src/manage-projects.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+} 

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Choose Project to Support</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    h1 {
+      font-size: 20px;
+      color: #333;
+      margin: 0 0 5px 0;
+    }
+    
+    .subheader {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+    }
+    
+    .project-list {
+      max-height: 350px;
+      overflow-y: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      background: white;
+    }
+    
+    .project-item {
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.2s;
+    }
+    
+    .project-item:hover {
+      background-color: #f0f7ff;
+    }
+    
+    .project-item:last-child {
+      border-bottom: none;
+    }
+    
+    .project-item.selected {
+      background-color: #e3f2fd;
+    }
+    
+    .project-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    
+    .project-logo svg {
+      width: 20px;
+      height: 20px;
+      color: #555;
+    }
+    
+    .project-info {
+      flex-grow: 1;
+    }
+    
+    .project-name {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 3px;
+    }
+    
+    .project-description {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .project-meta {
+      font-size: 11px;
+      color: #888;
+      margin-top: 3px;
+    }
+    
+    .footer {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    button {
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    
+    #donate-button {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    #donate-button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    
+    #cancel-button {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+    
+    .donation-amount {
+      margin-top: 15px;
+      padding: 10px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      font-size: 14px;
+    }
+    
+    .amount {
+      font-weight: bold;
+      color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Choose a Project to Support</h1>
+    <div class="subheader">Select an open source project to receive your donation</div>
+  </div>
+  
+  <div class="donation-amount">
+    Your donation amount: <span class="amount" id="donation-amount">$0.00</span>
+  </div>
+  
+  <div class="project-list" id="project-list">
+  </div>
+  
+  <div class="footer">
+    <button id="cancel-button">Cancel</button>
+    <button id="donate-button" disabled>Donate</button>
+  </div>
+  
+  <script src="select-project.js"></script>
+</body>
+</html> 

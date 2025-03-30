@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Source Support</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      width: 300px;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #4CAF50, #2E7D32);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      border-radius: 0 0 10px 10px;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+    }
+    
+    .content {
+      padding: 15px;
+    }
+    
+    .stats {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 15px;
+    }
+    
+    .stats-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    
+    .stats-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .stats-label {
+      color: #555;
+      font-size: 14px;
+    }
+    
+    .stats-value {
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    .settings {
+      margin-top: 20px;
+    }
+    
+    .settings-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 20px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background-color: #4CAF50;
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+    
+    .btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+      width: 100%;
+      margin-top: 15px;
+    }
+    
+    .btn:hover {
+      background: #388E3C;
+    }
+    
+    .footer {
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px solid #eee;
+    }
+
+    .project-list {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    
+    .project-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .project-item:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Open Source Support</h1>
+  </div>
+  
+  <div class="content">
+    <div class="stats">
+      <div class="stats-item">
+        <span class="stats-label">Total Donations:</span>
+        <span class="stats-value">$12.37</span>
+      </div>
+      <div class="stats-item">
+        <span class="stats-label">Projects Supported:</span>
+        <span class="stats-value">7</span>
+      </div>
+    </div>
+    
+    <h3>Recent Donations</h3>
+    <div class="project-list">
+      <div class="project-item">
+        <span>React</span>
+        <span>$0.75</span>
+      </div>
+      <div class="project-item">
+        <span>Webpack</span>
+        <span>$0.42</span>
+      </div>
+      <div class="project-item">
+        <span>Node.js</span>
+        <span>$1.20</span>
+      </div>
+    </div>
+    
+    <div class="settings">
+      <h3>Settings</h3>
+      <div class="settings-item">
+        <label class="toggle">
+          <input type="checkbox" id="enable-donations" checked>
+          <span class="slider"></span>
+        </label>
+        <span>Enable donation popups</span>
+      </div>
+      <div class="settings-item">
+        <label class="toggle">
+          <input type="checkbox" id="random-projects" checked>
+          <span class="slider"></span>
+        </label>
+        <span>Select random projects</span>
+      </div>
+    </div>
+    
+    <button class="btn" id="manage-projects">Manage Preferred Projects</button>
+    <button class="btn" id="support-open-source" style="margin-top: 10px; background: #2196F3;">Start Supporting Open Source</button>
+    
+    <div class="footer">
+      Built with ❤️ for open source sustainability
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 
