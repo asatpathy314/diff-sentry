@@ -68,11 +68,11 @@ const Footer = () => {
             >
               <h3 className="text-lg font-semibold mb-4">Resources</h3>
               <ul className="space-y-2">
-                <li><a href="/docs" className="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
+                <li><a href="/documentation" className="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
                 <li><a href="/api" className="text-gray-400 hover:text-white transition-colors">API Reference</a></li>
                 <li><a href="/tutorials" className="text-gray-400 hover:text-white transition-colors">Tutorials</a></li>
-                <li><a href="/support" className="text-gray-400 hover:text-white transition-colors">Support</a></li>
-                <li><a href="/status" className="text-gray-400 hover:text-white transition-colors">Status</a></li>
+                <li><a href="https://www.linkedin.com/in/kyle-vitayanuvatti/" className="text-gray-400 hover:text-white transition-colors">Support</a></li>
+                <li><a href="https://www.linkedin.com/in/abhishek-satpathy-1b2b84270/" className="text-gray-400 hover:text-white transition-colors">Status</a></li>
               </ul>
             </Motion.div>
             
@@ -90,9 +90,9 @@ const Footer = () => {
               <h3 className="text-lg font-semibold mb-4">Company</h3>
               <ul className="space-y-2">
                 <li><a href="/aboutus" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
-                <li><a href="https://www.youtube.com/shorts/C7bLFSv-44I" className="text-gray-400 hover:text  -white transition-colors">Careers</a></li>
+                <li><a href="https://www.mcdonalds.com/us/en-us.html" className="text-gray-400 hover:text  -white transition-colors">Careers</a></li>
                 <li><a href="https://www.youtube.com/shorts/mNTrgtJb6WM" className="text-gray-400 hover:text-white transition-colors">Press</a></li>
-                <li><a href="https://www.youtube.com/shorts/vslOx15D8uk" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                <li><a href="https://www.linkedin.com/in/austinjsong/" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
                 <li><a href="https://www.youtube.com/shorts/_3nG3yxoTjY" className="text-gray-400 hover:text-white transition-colors">Legal</a></li>
               </ul>
             </Motion.div>

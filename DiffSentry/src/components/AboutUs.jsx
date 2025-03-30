@@ -32,8 +32,8 @@ const AboutUs = () => {
         
         {/* Content */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white z-20">
-          <h1 className="text-[2.5rem] font-bold">About Us</h1>
-          <p className="text-[1.2rem] mt-4">
+          <h1 className="text-[3.5rem] font-bold">About Us</h1>
+          <p className="text-[1.5rem] mt-4">
             DiffSentry is an open-source software designed to support other open source repositories by 
             rounding up transactions for donations and scanning codebases for vulnerabilities.
           </p>
@@ -43,7 +43,7 @@ const AboutUs = () => {
       {/* Content Section */}
       <div className="max-w-[800px] w-full mt-8">
         {/* Our Story */}
-        <div className="mb-8 bg-[#e2edff] p-8 rounded text-left">
+        <div className="mb-8 bg-[#e2edff] p-8 rounded text-center">
           <h2 className="text-2xl font-bold text-gray-800">Making a Change</h2>
           <p className="mt-4 text-gray-500 leading-relaxed">
             DiffSentry was born from a simple idea: what if every digital transaction could help support the open source ecosystem? 
@@ -56,7 +56,7 @@ const AboutUs = () => {
         </div>
 
         {/* Security Scanning */}
-        <div className="mb-8 bg-[#ffe2e2] p-8 rounded text-left">
+        <div className="mb-8 bg-[#ffe2e2] p-8 rounded text-center">
           <h2 className="text-2xl font-bold text-gray-800">Protecting Open Source</h2>
           <p className="mt-4 text-gray-500 leading-relaxed">
             Beyond funding, DiffSentry is committed to the security of the open source ecosystem. Our advanced scanning tools 
@@ -70,6 +70,12 @@ const AboutUs = () => {
         {/* Our Team */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-800">The Team</h2>
+          <p className="mt-2 mb-3 text-gray-600">
+            The DiffSentry Team is composed of all 2027 UVA graduates who worked together to complete this project in 24 hours for the HooHacks 2025 hackathon.
+          </p>
+          <p className="italic text-sm text-gray-500 mb-4">
+            I am personally grateful to have worked with such a gifted team of people. Thank you to my friends! - Brady
+          </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 max-w-[700px] mx-auto">
             {teamMembers.map((member, index) => (
               <div key={index} className="bg-white p-5 rounded shadow-md text-center">
