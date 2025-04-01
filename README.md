@@ -1,7 +1,5 @@
 # DiffSentry
 
-DiffSentry is an open-source platform designed to support and secure the open source ecosystem through two core features: transaction rounding for donations and vulnerability scanning.
-
 ## Overview
 
 DiffSentry creates a sustainable support system for open source projects by:
