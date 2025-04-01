@@ -79,7 +79,7 @@ const Header = () => {
           </Motion.div>
           
 
-          <div className="hidden md:flex flex-grow justify-center space-x-16">
+          <div className="hidden xl:flex flex-grow justify-center space-x-16">
             <Motion.div 
               custom={1}
               initial="hidden"
@@ -87,7 +87,7 @@ const Header = () => {
               variants={navItemVariants}
             >
               <a 
-                href={`${getUrlPrefix()}#features`} 
+                href="/#features"
                 className="font-medium hover:text-[#0366d6] transition-colors"
               >
                 Features
@@ -113,7 +113,7 @@ const Header = () => {
               variants={navItemVariants}
             >
               <a 
-                href={`${getUrlPrefix()}#donations`}
+                href="/#donations"
                 className="font-medium hover:text-[#0366d6] transition-colors"
               >
                 Donations
@@ -144,22 +144,13 @@ const Header = () => {
           <div className="absolute right-4 flex items-center space-x-6"> 
             <ThemeToggle />
             <Motion.a 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              href="https://github.com/asatpathy314/diff-sentry" 
-              className="hidden md:inline-flex btn-primary"
-            >
-              Get Started
-            </Motion.a>
-            <Motion.a 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
               href="https://github.com/asatpathy314/diff-sentry" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="hidden md:flex items-center"
+              className="hidden xl:flex items-center"
             >
               <svg fill="currentColor" viewBox="0 0 24 24" className="h-6 w-6 mr-2">
                 <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.463 2 11.97c0 4.404 2.865 8.14 6.839 9.465.5.092.682-.216.682-.48 0-.236-.008-.864-.013-1.695-2.782.602-3.369-1.337-3.369-1.337-.454-1.151-1.11-1.458-1.11-1.458-.908-.618.069-.606.069-.606 1.003.07 1.531 1.027 1.531 1.027.892 1.524 2.341 1.084 2.91.828.092-.643.35-1.083.636-1.332-2.22-.251-4.555-1.107-4.555-4.927 0-1.088.39-1.979 1.029-2.675-.103-.252-.446-1.266.098-2.638 0 0 .84-.268 2.75 1.022A9.607 9.607 0 0112 6.82c.85.004 1.705.114 2.504.336 1.909-1.29 2.747-1.022 2.747-1.022.546 1.372.202 2.386.1 2.638.64.696 1.028 1.587 1.028 2.675 0 3.83-2.339 4.673-4.566 4.92.359.307.678.915.678 1.846 0 1.332-.012 2.407-.012 2.734 0 .267.18.577.688.48 3.97-1.32 6.833-5.054 6.833-9.458C22 6.463 17.522 2 12 2z"></path>
@@ -168,7 +159,7 @@ const Header = () => {
             </Motion.a>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden">
+            <div className="xl:hidden">
               <Motion.button
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -189,14 +180,14 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Updated Mobile Menu: center align links */}
+      {/* Mobile Menu */}
       {isMenuOpen && (
         <Motion.div 
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.3 }}
-          className="md:hidden py-6 bg-white dark:bg-gray-800 shadow-inner" 
+          className="xl:hidden py-6 bg-white dark:bg-gray-800 shadow-inner" 
         >
           <div className="container-custom text-center space-y-4">
             <Motion.div 
@@ -205,7 +196,7 @@ const Header = () => {
               transition={{ delay: 0.1, duration: 0.3 }}
             >
               <a 
-                href={`${getUrlPrefix()}#features`} 
+                href="/#features" 
                 className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
               >
                 Features
@@ -217,7 +208,7 @@ const Header = () => {
               transition={{ delay: 0.15, duration: 0.3 }}
             >
               <a 
-                href={`${getUrlPrefix()}#security`} 
+                href="/#security"
                 className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
               >
                 Security
@@ -229,7 +220,7 @@ const Header = () => {
               transition={{ delay: 0.2, duration: 0.3 }}
             >
               <a 
-                href={`${getUrlPrefix()}#donations`} 
+                href="/#donations" 
                 className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
               >
                 Donations
@@ -241,7 +232,7 @@ const Header = () => {
               transition={{ delay: 0.25, duration: 0.3 }}
             >
               <Link 
-                to="/documentation" 
+                to="https://github.com/asatpathy314/diff-sentry/tree/main/CI" 
                 className="block font-medium py-2 hover:text-[#0366d6] transition-colors"
               >
                 Documentation
@@ -265,9 +256,8 @@ const Header = () => {
               transition={{ delay: 0.35, duration: 0.3 }}
               className="pt-2 flex flex-col space-y-2"
             >
-              <a href="#signup" className="btn-primary text-center">Get Started</a>
               <a 
-                href="https://github.com/diffsentry" 
+                href="https://github.com/diff-sentry" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex items-center justify-center py-2 border border-gray-300 rounded-md"
@@ -277,7 +267,7 @@ const Header = () => {
                 </svg>
                 GitHub
               </a>
-            </Motion.div>
+          </Motion.div>
           </div>
         </Motion.div>
       )}
