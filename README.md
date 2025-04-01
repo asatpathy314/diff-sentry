@@ -1,6 +1,12 @@
 # DiffSentry
 
-DiffSentry is an open-source platform designed to support and secure the open source ecosystem through two core features: transaction rounding for donations and vulnerability scanning..
+DiffSentry is an open-source platform designed to support and secure the open source ecosystem through two core features: transaction rounding for donations and vulnerability scanning.
+
+## Overview
+
+DiffSentry creates a sustainable support system for open source projects by:
+1. Providing completely free automated security scanning to identify vulnerabilities in repositories
+2. Rounding up financial transactions and directing the difference to open source projects
 
 ## Roadmap
 
@@ -9,13 +15,8 @@ We built this as a hackathon project, but we're not just going to leave it on th
 - [ ] Remove Plaid integration (they take a pretty sizable cut) and link directly to open-source GitHub donation links.
 - [ ] Add more configuration for the Google Chrome extension.
 - [ ] Make backend truly multi-agentic (ideally for free, we'll see how we can do that). 
-- [ ] Add PromptGuard for the backend. This is a stateless, open-source backend, so there isn't much prompt injection can do to affect us. However, threat actors could engineer their PRs in such a way that they avoid detection, so let's see how to defend agains that.
+- [ ] Add Prompt guard for the backend. Our backend is stateless and open-source, so there isn't much prompt injection can do to affect us other than DOS. However, threat actors could engineer their PRs in such a way that they avoid detection, so we're planning to add some basic guards against that.
 - [ ] Diffhunk support on PR comments.
-
-## Overview
-DiffSentry creates a sustainable support system for open source projects by:
-1. Providing completely free automated security scanning to identify vulnerabilities in repositories
-2. Rounding up financial transactions and directing the difference to open source projects
 
 ## Features
 
@@ -94,9 +95,9 @@ fastapi dev app/main.py
 
 ## Self-Hosting
 
-We've chosen to host our backend on Heroku and host our frontend on Cloudflare. We have a simple deploy script you can follow in the `DiffSentry` folder for the frontend as long as you install Cloudflare's `wrangler` CLI. 
+We've chosen to host our backend on Heroku and host our frontend on Cloudflare. We have a simple deploy script you can follow to self-host in the `DiffSentry` folder for the frontend as long as you install Cloudflare's `wrangler` CLI. 
 
-For the backend it gets a little more involved, and to be honest I would reccomend separating them out into separate repos and then using the `Procfile` attached for deployment.
+For the backend it gets a little more involved, and to be honest I would reccomend separating the backend out into a separate repo and then using the `Procfile` attached for deployment on Heroku.
 
 ## Contributing
 
