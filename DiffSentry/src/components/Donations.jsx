@@ -50,7 +50,7 @@ const Donations = () => {
                 viewport={{ once: false, margin: "-100px" }}
                 className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700"
               >
-                <div className="text-3xl font-bold text-primary mb-2">$2.5M+</div>
+                <div className="text-3xl font-bold text-primary mb-2">$500+</div>
                 <p className="text-gray-600 dark:text-gray-400">
                   projected donations to open source maintainers through our platform
                 </p>
