@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion as Motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 
 // Import images directly
 import abhishekImg from './images/abhisheksatpathy.jpeg';
@@ -10,10 +9,10 @@ import kyleImg from './images/kylevitayanuvatti.jpeg';
 import heroImg from './images/diffsentryhero.png';
 
 const teamMembers = [
-  { name: 'Abhishek Satpathy', img: abhishekImg },
-  { name: 'Austin Song', img: austinImg },
-  { name: 'Brady Park', img: bradyImg },
-  { name: 'Kyle Vitayanuvatti', img: kyleImg },
+  { name: 'Abhishek Satpathy', img: abhishekImg, linkedin: "https://www.linkedin.com/in/abhishek-satpathy-1b2b84270/" },
+  { name: 'Austin Song', img: austinImg, linkedin: "https://www.linkedin.com/in/austinjsong/" },
+  { name: 'Brady Park', img: bradyImg, linkedin: "https://www.linkedin.com/in/brady-park-9a5469208/" },
+  { name: 'Kyle Vitayanuvatti', img: kyleImg, linkedin: "https://www.linkedin.com/in/kyle-vitayanuvatti/"},
 ];
 
 const AboutUs = () => {
@@ -78,10 +77,17 @@ const AboutUs = () => {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 max-w-[700px] mx-auto">
             {teamMembers.map((member, index) => (
-              <div key={index} className="bg-white p-5 rounded shadow-md text-center">
-                <img src={member.img} alt={member.name} className="w-[150px] h-[150px] rounded-full mx-auto object-cover" />
-                <h3 className="mt-2 text-lg font-bold">{member.name}</h3>
-              </div>
+              <Motion.a 
+                href={member.linkedin}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                key={index}
+              >
+                <div key={index} className="bg-white p-5 rounded shadow-md text-center">
+                  <img src={member.img} alt={member.name} className="w-[150px] h-[150px] rounded-full mx-auto object-cover" />
+                  <h3 className="mt-2 text-lg font-bold">{member.name}</h3>
+                </div>
+              </Motion.a>
             ))}
           </div>
         </div>

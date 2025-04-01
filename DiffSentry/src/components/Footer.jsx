@@ -49,10 +49,9 @@ const Footer = () => {
             >
               <h3 className="text-lg font-semibold mb-4">Product</h3>
               <ul className="space-y-2">
-                <li><a href="#features" className="text-gray-400 hover:text-white transition-colors">Features</a></li>
-                <li><a href="#security" className="text-gray-400 hover:text-white transition-colors">Security Scanning</a></li>
-                <li><a href="#donations" className="text-gray-400 hover:text-white transition-colors">Micro-Donations</a></li>
-                <li><a href="#https://www.linkedin.com/in/brady-park-9a5469208/" className="text-gray-400 hover:text-white transition-colors">Integrations</a></li>
+                <li><a href="/#features" className="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                <li><a href="/#security" className="text-gray-400 hover:text-white transition-colors">Security Scanning</a></li>
+                <li><a href="/#donations" className="text-gray-400 hover:text-white transition-colors">Micro-Donations</a></li>
               </ul>
             </Motion.div>
             
@@ -70,7 +69,7 @@ const Footer = () => {
               <h3 className="text-lg font-semibold mb-4">Resources</h3>
               <ul className="space-y-2">
                 <li><a href="https://diff-sentry-backend-c77f0d5e98bc.herokuapp.com/docs" className="text-gray-400 hover:text-white transition-colors">API Reference</a></li>
-                <li><a href="https://www.linkedin.com/in/kyle-vitayanuvatti/" className="text-gray-400 hover:text-white transition-colors">Support</a></li>
+                <li><a href="mailto:support@diff-sentry.tech" className="text-gray-400 hover:text-white transition-colors">Support</a></li>
                 <li><a href="https://diff-sentry-backend-c77f0d5e98bc.herokuapp.com/" className="text-gray-400 hover:text-white transition-colors">Status</a></li>
               </ul>
             </Motion.div>
@@ -89,9 +88,7 @@ const Footer = () => {
               <h3 className="text-lg font-semibold mb-4">Company</h3>
               <ul className="space-y-2">
                 <li><a href="/aboutus" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
-                <li><a href="https://www.mcdonalds.com/us/en-us.html" className="text-gray-400 hover:text  -white transition-colors">Careers</a></li>
-                <li><a href="https://www.youtube.com/shorts/mNTrgtJb6WM" className="text-gray-400 hover:text-white transition-colors">Press</a></li>
-                <li><a href="https://www.linkedin.com/in/austinjsong/" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                <li><a href="mailto:support@diff-sentry.tech" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
                 <li><a href="https://www.youtube.com/shorts/_3nG3yxoTjY" className="text-gray-400 hover:text-white transition-colors">Legal</a></li>
               </ul>
             </Motion.div>
