@@ -257,7 +257,7 @@ const Header = () => {
               className="pt-2 flex flex-col space-y-2"
             >
               <a 
-                href="https://github.com/diff-sentry" 
+                href="https://github.com/asatpathy314/diff-sentry" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex items-center justify-center py-2 border border-gray-300 rounded-md"
