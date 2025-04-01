@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion as Motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -141,6 +142,7 @@ const Header = () => {
           </div>
 
           <div className="absolute right-4 flex items-center space-x-6"> 
+            <ThemeToggle />
             <Motion.a 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
