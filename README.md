@@ -1,12 +1,18 @@
-
-![DiffSentry Logo](/DiffSentry/src/components/images/diffsentryvert.png)
-
 # DiffSentry
 
-DiffSentry is an open-source platform designed to support and secure the open source ecosystem through two core features: transaction rounding for donations and vulnerability scanning.
+DiffSentry is an open-source platform designed to support and secure the open source ecosystem through two core features: transaction rounding for donations and vulnerability scanning..
+
+## Roadmap
+
+We built this as a hackathon project, but we're not just going to leave it on the side of the road. This is our roadmap over the next few months
+
+- [ ] Remove Plaid integration (they take a pretty sizable cut) and link directly to open-source GitHub donation links.
+- [ ] Add more configuration for the Google Chrome extension.
+- [ ] Make backend truly multi-agentic (ideally for free, we'll see how we can do that). 
+- [ ] Add PromptGuard for the backend. This is a stateless, open-source backend, so there isn't much prompt injection can do to affect us. However, threat actors could engineer their PRs in such a way that they avoid detection, so let's see how to defend agains that.
+- [ ] Diffhunk support on PR comments.
 
 ## Overview
-
 DiffSentry creates a sustainable support system for open source projects by:
 1. Providing completely free automated security scanning to identify vulnerabilities in repositories
 2. Rounding up financial transactions and directing the difference to open source projects
@@ -26,7 +32,6 @@ Our CI security features include:
 ### Transaction Rounding & Donations
 
 DiffSentry's Chrome Extension allows users to:
-- Connect their payment accounts securely
 - Round up transactions to the nearest dollar (or other unit)
 - Direct the spare change to open source projects of their choice
 - Track their contribution history and impact
@@ -87,24 +92,21 @@ Start the development server.
 fastapi dev app/main.py
 ```
 
+## Self-Hosting
+
+We've chosen to host our backend on Heroku and host our frontend on Cloudflare. We have a simple deploy script you can follow in the `DiffSentry` folder for the frontend as long as you install Cloudflare's `wrangler` CLI. 
+
+For the backend it gets a little more involved, and to be honest I would reccomend separating them out into separate repos and then using the `Procfile` attached for deployment.
+
 ## Contributing
 
-We welcome contributions! Here's how to get started:
+We welcome contributions! Whether it's a typo or a major issue, we'd love for you to contribute your work.
 
 1. Fork the repository  
 2. Create a new branch: `git checkout -b feature/your-feature-name`  
 3. Commit your changes: `git commit -m "Add your feature"`  
 4. Push to the branch: `git push origin feature/your-feature-name`  
 5. Submit a pull request  
-
-## Roadmap
-
-- [ ] Expanded payment gateway support (Stripe, PayPal, etc.)  
-- [ ] Improved dashboard with visual analytics  
-- [ ] Community ranking system for project impact  
-- [ ] AI-assisted vulnerability triage  
-- [ ] Adding more agents to the CI pipeline.
-- [ ] Diffhunk support on PR comments.
 
 ## License
 
