@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion as Motion } from 'framer-motion';
-import { useTheme } from './ThemeProvider';
 
 // Import images directly
 import abhishekImg from './images/abhisheksatpathy.jpeg';
@@ -17,8 +16,6 @@ const teamMembers = [
 ];
 
 const AboutUs = () => {
-  const { darkMode } = useTheme();
-  
   return (
     <section className="pb-16 relative flex flex-col items-center justify-center w-full min-h-screen mx-auto bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
       {/* Hero Section */}
