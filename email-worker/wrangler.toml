@@ -1,0 +1,6 @@
+name = "email-forwarder"
+main = "index.js"
+compatibility_date = "2025-04-01"
+
+[vars]
+FORWARD_ADDRESSES = "satpathy.abhishek001@gmail.com,apu9pz@virginia.edu"
