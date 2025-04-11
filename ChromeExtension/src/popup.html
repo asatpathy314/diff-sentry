@@ -1,79 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Open Source Support</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
       width: 300px;
       margin: 0;
       padding: 0;
-      color: #333;
+      background-color: #f8f9fa;
+      color: #24292e;
     }
     
     .header {
-      background: linear-gradient(135deg, #4CAF50, #2E7D32);
+      background-color: #0366d6;
       color: white;
       padding: 15px;
-      text-align: center;
-      border-radius: 0 0 10px 10px;
-    }
-    
-    .header h1 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 500;
-    }
-    
-    .content {
-      padding: 15px;
-    }
-    
-    .stats {
-      background: #f5f5f5;
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 15px;
-    }
-    
-    .stats-item {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      margin-bottom: 8px;
     }
     
-    .stats-item:last-child {
-      margin-bottom: 0;
+    .header-logo {
+      display: flex;
+      align-items: center;
     }
     
-    .stats-label {
-      color: #555;
-      font-size: 14px;
+    .header-logo img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
     }
     
-    .stats-value {
+    .header-title {
       font-weight: 500;
-      font-size: 14px;
+      font-size: 16px;
     }
     
-    .settings {
-      margin-top: 20px;
+    .header-actions {
+      display: flex;
+    }
+    
+    .header-actions button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      margin-left: 8px;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    
+    .header-actions button:hover {
+      opacity: 1;
+    }
+    
+    section {
+      padding: 15px;
+      background: white;
+      margin-bottom: 1px;
+    }
+    
+    .about-section {
+      display: none;
+    }
+    
+    .settings-title {
+      font-weight: 500;
+      margin-bottom: 15px;
+      color: #24292e;
     }
     
     .settings-item {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eaecef;
+    }
+    
+    .settings-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .toggle-row {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+    }
+    
+    .toggle-label {
+      font-size: 14px;
     }
     
     .toggle {
       position: relative;
       display: inline-block;
-      width: 40px;
-      height: 20px;
-      margin-right: 10px;
+      width: 34px;
+      height: 18px;
     }
     
     .toggle input {
@@ -91,129 +117,213 @@
       bottom: 0;
       background-color: #ccc;
       transition: .4s;
-      border-radius: 20px;
+      border-radius: 34px;
     }
     
     .slider:before {
       position: absolute;
       content: "";
-      height: 16px;
-      width: 16px;
-      left: 2px;
+      height: 14px;
+      width: 14px;
+      left: 3px;
       bottom: 2px;
       background-color: white;
-      transition: .4s;
+      transition: .2s;
       border-radius: 50%;
     }
     
     input:checked + .slider {
-      background-color: #4CAF50;
+      background-color: #2ea44f;
     }
     
     input:checked + .slider:before {
-      transform: translateX(20px);
+      transform: translateX(14px);
     }
     
-    .btn {
-      background: #4CAF50;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 4px;
-      cursor: pointer;
+    .about-content {
       font-size: 14px;
-      transition: background 0.3s;
-      width: 100%;
-      margin-top: 15px;
+      line-height: 1.5;
+      color: #586069;
     }
     
-    .btn:hover {
-      background: #388E3C;
+    .about-content p {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    
+    .about-content a {
+      color: #0366d6;
+      text-decoration: none;
+    }
+    
+    .about-content a:hover {
+      text-decoration: underline;
+    }
+    
+    .button {
+      background-color: #f1f2f3;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: background-color 0.2s;
+    }
+    
+    .button:hover {
+      background-color: #e1e4e8;
     }
     
     .footer {
+      padding: 8px 15px;
       font-size: 12px;
-      color: #999;
+      color: #586069;
       text-align: center;
-      margin-top: 15px;
-      padding-top: 10px;
-      border-top: 1px solid #eee;
-    }
-
-    .project-list {
-      margin-top: 10px;
-      font-size: 14px;
+      background-color: #f6f8fa;
+      border-top: 1px solid #eaecef;
     }
     
-    .project-item {
+    .footer a {
+      color: #0366d6;
+      text-decoration: none;
+    }
+    
+    .preferred-repos {
+      margin-top: 10px;
+      max-height: 120px;
+      overflow-y: auto;
+      border: 1px solid #eaecef;
+      border-radius: 4px;
+      padding: 8px;
+      background-color: #f6f8fa;
+    }
+    
+    .repo-item {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #eee;
+      align-items: center;
+      padding: 6px 8px;
+      border-bottom: 1px solid #eaecef;
+      font-size: 12px;
     }
     
-    .project-item:last-child {
+    .repo-item:last-child {
       border-bottom: none;
+    }
+    
+    .repo-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-grow: 1;
+    }
+    
+    .remove-repo {
+      background: none;
+      border: none;
+      color: #d73a49;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0 4px;
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>Open Source Support</h1>
+    <div class="header-logo">
+      <img src="../assets/icon32.png" alt="Open Source Support">
+      <div class="header-title">Open Source Support</div>
+    </div>
+    <div class="header-actions">
+      <button id="settings-btn">Settings</button>
+      <button id="about-btn">About</button>
+    </div>
   </div>
   
-  <div class="content">
-    <div class="stats">
-      <div class="stats-item">
-        <span class="stats-label">Total Donations:</span>
-        <span class="stats-value">$12.37</span>
-      </div>
-      <div class="stats-item">
-        <span class="stats-label">Projects Supported:</span>
-        <span class="stats-value">7</span>
-      </div>
-    </div>
-    
-    <h3>Recent Donations</h3>
-    <div class="project-list">
-      <div class="project-item">
-        <span>React</span>
-        <span>$0.75</span>
-      </div>
-      <div class="project-item">
-        <span>Webpack</span>
-        <span>$0.42</span>
-      </div>
-      <div class="project-item">
-        <span>Node.js</span>
-        <span>$1.20</span>
-      </div>
-    </div>
+  <section id="settings-section" class="settings-section">
+    <div class="settings-title">Settings</div>
     
     <div class="settings">
-      <h3>Settings</h3>
       <div class="settings-item">
-        <label class="toggle">
-          <input type="checkbox" id="enable-donations" checked>
-          <span class="slider"></span>
-        </label>
-        <span>Enable donation popups</span>
+        <div class="toggle-row">
+          <span class="toggle-label">Enable popups</span>
+          <label class="toggle">
+            <input type="checkbox" id="enable-donations" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div style="font-size: 12px; color: #666; margin-top: 4px;">
+          Show GitHub project suggestions at checkout
+        </div>
       </div>
+      
       <div class="settings-item">
-        <label class="toggle">
-          <input type="checkbox" id="random-projects" checked>
-          <span class="slider"></span>
-        </label>
-        <span>Select random projects</span>
+        <div class="toggle-row">
+          <span class="toggle-label">Use preferred repos only</span>
+          <label class="toggle">
+            <input type="checkbox" id="use-preferred-repos">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div style="font-size: 12px; color: #666; margin-top: 4px;">
+          Only show your preferred repositories during checkout
+        </div>
+        
+        <div id="preferred-repos-container" class="preferred-repos">
+          <div id="preferred-repos-list">
+            <!-- Preferred repositories will be listed here -->
+            <div class="repo-item empty-state">No preferred repositories yet</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="settings-item">
+        <div class="toggle-row">
+          <span class="toggle-label">Random projects</span>
+          <label class="toggle">
+            <input type="checkbox" id="random-projects" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div style="font-size: 12px; color: #666; margin-top: 4px;">
+          Show random GitHub projects at checkout
+        </div>
+      </div>
+      
+      <div class="settings-item">
+        <button id="manage-projects" class="button">
+          Browse Trending Projects
+        </button>
+      </div>
+      
+      <div class="settings-item">
+        <button id="add-preferred-repo" class="button">
+          Add Preferred Repository
+        </button>
       </div>
     </div>
+  </section>
+  
+  <section id="about-section" class="about-section">
+    <div class="settings-title">About</div>
     
-    <button class="btn" id="manage-projects">Manage Preferred Projects</button>
-    <button class="btn" id="support-open-source" style="margin-top: 10px; background: #2196F3;">Start Supporting Open Source</button>
-    
-    <div class="footer">
-      Built with ❤️ for open source sustainability
+    <div class="about-content">
+      <p>
+        Open Source Support helps you discover and contribute to open source projects while shopping online.
+      </p>
+      <p>
+        When you checkout on an e-commerce site, the extension shows you a popular open source project on GitHub that you might be interested in.
+      </p>
+      <p>
+        <a href="https://github.com/trending" target="_blank">Browse Trending Projects</a>
+      </p>
     </div>
+  </section>
+  
+  <div class="footer">
+    Version 1.0 | <a href="https://github.com" target="_blank">GitHub</a>
   </div>
   
   <script src="popup.js"></script>

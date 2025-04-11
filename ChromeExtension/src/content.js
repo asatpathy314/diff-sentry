@@ -244,7 +244,6 @@ function getCheckoutSessionKey() {
     }
   }
   
-  // Add some content from the page to make it more specific to this cart
   // Focus on price-related elements which indicate specific cart contents
   const priceElements = document.querySelectorAll('.price, .total, [class*="price"], [class*="total"]');
   let priceTexts = '';
@@ -260,22 +259,23 @@ function getCheckoutSessionKey() {
   return `checkout-session-${domain}-${cartPath}-${contentHash}`;
 }
 
-// Set donation made flag in session storage
+// Mark that a donation popup has been shown to the user
 function markDonationMade() {
-  donationMadeInCurrentSession = true;
-  
-  // Also store in session storage to persist across page refreshes within the same session
+  // Update our session storage to prevent showing the popup again
   try {
-    const sessionKey = getCheckoutSessionKey();
-    sessionStorage.setItem(sessionKey, 'donated');
+    const checkoutSession = getCheckoutSessionKey();
+    sessionStorage.setItem(`donation-popup-shown-${checkoutSession}`, 'true');
     
-    // Set a flag to disable the popup on refresh, which can be cleared to enable popups again
-    // Comment this out to allow popups every refresh
-    sessionStorage.setItem('disable-popup-on-refresh', 'false');
+    // Also track in background script
+    safeChromeCall(() => {
+      chrome.runtime.sendMessage({
+        type: 'MARK_POPUP_SHOWN'
+      });
+    });
     
-    console.log('Donation marked as complete for this checkout session:', sessionKey);
-  } catch (e) {
-    console.log('Error saving to session storage:', e);
+    console.log('Marked popup as shown for this session');
+  } catch (error) {
+    console.error('Error marking popup as shown:', error);
   }
 }
 
@@ -321,8 +321,7 @@ function cleanupDonationRecords() {
         // If it's from a different domain, remove it
         if (!key.includes(`checkout-session-${currentDomain}`)) {
           console.log('Cleaning up donation record from different domain:', key);
-          // Keep this commented out for testing - in production we would clear these
-          // sessionStorage.removeItem(key);
+          sessionStorage.removeItem(key);
         }
       }
     }
@@ -435,408 +434,296 @@ function extractPurchaseAmount() {
 }
 
 // Process a donation after user confirms
-function processDonation(purchaseAmount, donationAmount, useRandomProject, projectInfo) {
-  console.log('Processing donation:', { purchaseAmount, donationAmount, useRandomProject, projectInfo });
-  
-  // If a specific project was provided, use it directly
-  if (!useRandomProject && projectInfo) {
-    safeChromeCall(() => {
-      chrome.runtime.sendMessage({
-        type: 'PROCESS_DONATION',
-        purchaseAmount,
-        donationAmount,
-        useRandomProject: false,
-        projectInfo
-      }, response => {
-        if (chrome.runtime.lastError) {
-          console.log('Error sending message:', chrome.runtime.lastError);
-        } else {
-          console.log('Donation processed successfully');
-          
-          // Force update the popup UI if it's open
-          chrome.runtime.sendMessage({
-            type: 'UPDATE_DONATION_STATS'
-          });
-        }
-      });
-    });
+async function processDonation(donationAmount, useRandomProject) {
+  // Check if a donation is already in progress
+  if (donationInProgress) {
+    console.log('A donation is already in progress');
     return;
   }
   
-  // Get the list of preferred projects or use a random certified project
-  safeChromeCall(() => {
-    chrome.storage.sync.get(['preferredProjects', 'randomSelection'], async (result) => {
-      if (chrome.runtime.lastError) {
-        console.log('Error accessing storage:', chrome.runtime.lastError);
-        return;
-      }
-      
-      let projectToSupport = null;
-      
-      // If user chose to select a project or we have no preferred projects
-      if (useRandomProject || !result.preferredProjects || result.preferredProjects.length === 0) {
-        // Get a random project from a list of verified open source projects
-        projectToSupport = await getRandomOpenSourceProject();
-      } else {
-        // Choose a random project from the user's preferred list
-        const randomIndex = Math.floor(Math.random() * result.preferredProjects.length);
-        projectToSupport = result.preferredProjects[randomIndex];
-      }
-      
-      if (projectToSupport) {
+  donationInProgress = true;
+  
+  try {
+    // Get the project to show in the donation popup
+    getProjectToShow().then(projectToShow => {
+      if (projectToShow) {
         // Send the donation info to the background script for processing
         safeChromeCall(() => {
           chrome.runtime.sendMessage({
-            type: 'PROCESS_DONATION',
-            purchaseAmount,
+            action: 'processDonation',
             donationAmount,
             useRandomProject,
-            projectInfo: projectToSupport
+            projectInfo: projectToShow
           }, response => {
             if (chrome.runtime.lastError) {
-              console.log('Error sending message:', chrome.runtime.lastError);
-            } else {
-              console.log('Donation processed successfully');
-              
-              // Force update the popup UI if it's open
-              chrome.runtime.sendMessage({
-                type: 'UPDATE_DONATION_STATS'
-              });
+              console.error('Error sending message:', chrome.runtime.lastError);
+              donationInProgress = false;
+              return;
             }
+            
+            // Handle the response
+            if (response && response.success) {
+              console.log('Donation processed successfully');
+              // Show success message or other UI updates
+            } else {
+              console.error('Failed to process donation');
+              // Show error message
+            }
+            
+            donationInProgress = false;
           });
         });
       } else {
+        console.error('No project available for donation');
+        donationInProgress = false;
         alert('Sorry, we could not process your donation at this time. Please try again later.');
       }
     });
-  });
+  } catch (error) {
+    console.error('Error in donation process:', error);
+    donationInProgress = false;
+    alert('Sorry, an error occurred during the donation process. Please try again later.');
+  }
 }
 
-// Get a random open source project from a predefined list
+// Get a random open source project from GitHub to donate to
 async function getRandomOpenSourceProject() {
-  // In a production app, this would come from an API or database
-  // For demonstration, we'll use a list of popular open source projects
-  const popularProjects = [
-    {
-      id: 'react',
-      name: 'React',
-      fullName: 'facebook/react',
-      description: 'A JavaScript library for building user interfaces',
-      stars: 180000,
-      url: 'https://github.com/facebook/react'
-    },
-    {
-      id: 'vue',
-      name: 'Vue.js',
-      fullName: 'vuejs/vue',
-      description: 'Vue.js is a progressive, incrementally-adoptable JavaScript framework',
-      stars: 195000,
-      url: 'https://github.com/vuejs/vue'
-    },
-    {
-      id: 'tensorflow',
-      name: 'TensorFlow',
-      fullName: 'tensorflow/tensorflow',
-      description: 'An open source machine learning framework',
-      stars: 160000,
-      url: 'https://github.com/tensorflow/tensorflow'
-    },
-    {
-      id: 'vscode',
-      name: 'VS Code',
-      fullName: 'microsoft/vscode',
-      description: 'Visual Studio Code',
-      stars: 130000,
-      url: 'https://github.com/microsoft/vscode'
-    },
-    {
-      id: 'nodejs',
-      name: 'Node.js',
-      fullName: 'nodejs/node',
-      description: 'Node.js JavaScript runtime',
-      stars: 85000,
-      url: 'https://github.com/nodejs/node'
+  try {
+    // Use GitHub's trending repositories as a source of open source projects
+    const response = await fetch('https://api.github.com/search/repositories?q=stars:>1000&sort=stars&order=desc');
+    const data = await response.json();
+    
+    if (data.items && data.items.length > 0) {
+      // Get a random project from the top results
+      const randomIndex = Math.floor(Math.random() * Math.min(20, data.items.length));
+      const randomProject = data.items[randomIndex];
+      
+      return {
+        name: randomProject.full_name,
+        description: randomProject.description,
+        stars: randomProject.stargazers_count,
+        html_url: randomProject.html_url,
+        owner: {
+          login: randomProject.owner.login,
+          avatar_url: randomProject.owner.avatar_url
+        }
+      };
     }
-  ];
-  
-  // Randomly select a project
-  const randomIndex = Math.floor(Math.random() * popularProjects.length);
-  return popularProjects[randomIndex];
+    
+    return null;
+  } catch (error) {
+    console.error('Error fetching random project:', error);
+    return null;
+  }
+}
+
+// Get the project to show in the donation popup
+async function getProjectToShow() {
+  return new Promise((resolve) => {
+    safeChromeCall(() => {
+      chrome.storage.sync.get(['preferredProjects', 'randomSelection', 'usePreferredOnly'], async (result) => {
+        if (chrome.runtime.lastError) {
+          console.log('Error accessing storage:', chrome.runtime.lastError);
+          // Fallback to a random project if we can't access storage
+          const randomProject = await getRandomOpenSourceProject();
+          resolve(randomProject);
+          return;
+        }
+        
+        const useRandomProject = result.randomSelection;
+        let projectToShow = null;
+        
+        // Check if we have preferred projects and should use them
+        if (result.preferredProjects && result.preferredProjects.length > 0) {
+          // If usePreferredOnly is true, we must use a preferred project
+          if (!useRandomProject || result.usePreferredOnly) {
+            const randomIndex = Math.floor(Math.random() * result.preferredProjects.length);
+            projectToShow = result.preferredProjects[randomIndex];
+          }
+        }
+        
+        // If we don't have a project yet (no preferred projects or random selection is enabled)
+        // and usePreferredOnly is not true, get a random project
+        if (!projectToShow && !result.usePreferredOnly) {
+          projectToShow = await getRandomOpenSourceProject();
+        }
+        
+        resolve(projectToShow);
+      });
+    });
+  });
 }
 
 // Create and inject the donation popup
 function createDonationPopup(purchaseAmount, donationAmount) {
   // Remove any existing popups
-  const existingPopup = document.getElementById('oss-donation-popup');
+  const existingPopup = document.getElementById('open-source-donation-popup');
   if (existingPopup) {
     existingPopup.remove();
   }
   
-  // Create the popup container
-  const popup = document.createElement('div');
-  popup.id = 'oss-donation-popup';
-  popup.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 10000;
-    font-family: Arial, sans-serif;
-    padding: 15px;
-  `;
+  // Create popup element
+  const popupElement = document.createElement('div');
+  popupElement.id = 'open-source-donation-popup';
   
-  // Popup content
-  popup.innerHTML = `
-    <div style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">
-      <h3 style="margin: 0; font-size: 16px; color: #333;">Support Open Source</h3>
-      <p style="margin: 5px 0 0; font-size: 14px; color: #666;">
-        Round up your $${purchaseAmount.toFixed(2)} purchase to support open source?
-      </p>
-    </div>
-    <div style="margin-bottom: 15px;">
-      <p style="margin: 0; font-size: 14px; color: #333;">
-        Donation amount: <strong>$${donationAmount}</strong>
-      </p>
-    </div>
-    <div style="display: flex; justify-content: space-between;">
-      <button id="oss-choose-project" style="
-        background: #f0f0f0;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-      ">Choose Project</button>
-      <button id="oss-donate-random" style="
-        background: #4CAF50;
-        color: white;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-      ">Donate</button>
-      <button id="oss-cancel" style="
-        background: none;
-        border: none;
-        padding: 8px 12px;
-        cursor: pointer;
-        font-size: 14px;
-        color: #999;
-      ">Skip</button>
-    </div>
-  `;
+  // Style the popup
+  Object.assign(popupElement.style, {
+    position: 'fixed',
+    bottom: '20px',
+    right: '20px',
+    width: '320px',
+    backgroundColor: 'white',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+    zIndex: '999999',
+    overflow: 'hidden',
+    fontSize: '14px',
+    border: '1px solid #ddd',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif'
+  });
   
-  // Add the popup to the page
-  document.body.appendChild(popup);
+  // Generate a random project to show
+  getProjectToShow().then(project => {
+    // Popup header
+    const headerHTML = `
+      <div style="padding: 12px 16px; background-color: #0366d6; color: white; display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-weight: bold; font-size: 16px;">Support Open Source</div>
+        <button id="donation-popup-close" style="background: none; border: none; color: white; cursor: pointer; font-size: 18px;">×</button>
+      </div>
+    `;
+    
+    // Content based on whether we have a project or not
+    let contentHTML = '';
+    
+    if (project) {
+      // Format project details with GitHub information
+      contentHTML = `
+        <div style="padding: 16px; border-bottom: 1px solid #eee;">
+          <div style="display: flex; align-items: center; margin-bottom: 12px;">
+            <img src="${project.owner.avatar_url}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 12px;" />
+            <div>
+              <div style="font-weight: bold; margin-bottom: 4px;">${project.name}</div>
+              <div style="font-size: 12px; color: #666; line-height: 1.3;">${project.description || 'An open source project on GitHub'}</div>
+            </div>
+          </div>
+          <div style="background-color: #f6f8fa; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
+            <div style="margin-bottom: 8px;">Found this open source project you might be interested in</div>
+            <div style="font-size: 12px; color: #666;">GitHub open source project with ${project.stars.toLocaleString()} stars</div>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 12px;">
+            <a href="${project.html_url}" target="_blank" style="text-decoration: none; font-size: 12px; color: #0366d6; display: flex; align-items: center;">
+              <span style="margin-right: 4px;">View on GitHub</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+            </a>
+            <div style="margin-left: auto; display: flex; align-items: center; font-size: 12px; color: #666;">
+              <span style="margin-right: 4px;">${project.stars.toLocaleString()}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" fill="#ffd33d">
+                <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.192L.819 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      // Fallback if we couldn't fetch a project
+      contentHTML = `
+        <div style="padding: 16px; border-bottom: 1px solid #eee;">
+          <div style="margin-bottom: 12px;">
+            <div style="font-weight: bold; margin-bottom: 8px;">Discover Open Source Software</div>
+            <div style="font-size: 13px; color: #666; line-height: 1.4;">Find popular open source projects on GitHub</div>
+          </div>
+          <div style="background-color: #f6f8fa; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
+            <div style="font-size: 12px; color: #666;">GitHub has thousands of open source projects you can explore and contribute to.</div>
+          </div>
+        </div>
+      `;
+    }
+    
+    // Action buttons
+    const actionsHTML = `
+      <div style="padding: 12px 16px; display: flex; justify-content: space-between;">
+        <button id="donation-popup-cancel" style="padding: 8px 12px; border: 1px solid #ddd; background: none; border-radius: 4px; cursor: pointer;">No Thanks</button>
+        <button id="donation-popup-donate" style="padding: 8px 12px; background-color: #0366d6; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">Visit GitHub Repo</button>
+      </div>
+    `;
+    
+    // Assemble the complete popup HTML
+    popupElement.innerHTML = headerHTML + contentHTML + actionsHTML;
+    
+    // Add the popup to the page
+    document.body.appendChild(popupElement);
+    
+    // Set up event listeners
+    setupDonationPopupEventListeners(popupElement, purchaseAmount, donationAmount, project);
+  }).catch(error => {
+    console.error('Error creating donation popup:', error);
+    // Create a simpler fallback popup without project details
+    const simpleHTML = `
+      <div style="padding: 12px 16px; background-color: #0366d6; color: white; display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-weight: bold; font-size: 16px;">Open Source Projects</div>
+        <button id="donation-popup-close" style="background: none; border: none; color: white; cursor: pointer; font-size: 18px;">×</button>
+      </div>
+      <div style="padding: 16px; border-bottom: 1px solid #eee;">
+        <div style="margin-bottom: 12px;">
+          <div style="font-weight: bold; margin-bottom: 8px;">Discover Open Source</div>
+          <div style="font-size: 13px; color: #666; line-height: 1.4;">Find interesting projects on GitHub to explore</div>
+        </div>
+      </div>
+      <div style="padding: 12px 16px; display: flex; justify-content: space-between;">
+        <button id="donation-popup-cancel" style="padding: 8px 12px; border: 1px solid #ddd; background: none; border-radius: 4px; cursor: pointer;">Not Now</button>
+        <button id="donation-popup-donate" style="padding: 8px 12px; background-color: #0366d6; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">Browse GitHub</button>
+      </div>
+    `;
+    
+    popupElement.innerHTML = simpleHTML;
+    document.body.appendChild(popupElement);
+    setupDonationPopupEventListeners(popupElement, purchaseAmount, donationAmount, null);
+  });
   
-  // Store popup info in session storage to make it persistent
-  try {
-    sessionStorage.setItem('oss-active-popup', JSON.stringify({
-      timestamp: Date.now(),
-      domain: window.location.hostname,
-      purchaseAmount,
-      donationAmount,
-      pendingInteraction: true
-    }));
-  } catch (e) {
-    console.log('Error saving popup state to session storage:', e);
+  return popupElement;
+}
+
+// Helper for setting up the event listeners on the donation popup
+function setupDonationPopupEventListeners(popupElement, purchaseAmount, donationAmount, projectInfo) {
+  // Close button
+  const closeButton = popupElement.querySelector('#donation-popup-close');
+  if (closeButton) {
+    closeButton.addEventListener('click', () => {
+      popupElement.remove();
+    });
   }
   
-  // Check if the user has connected their bank account
-  safeChromeCall(() => {
-    chrome.storage.sync.get(['plaidConnected'], (result) => {
-      if (chrome.runtime.lastError) {
-        console.log('Error accessing storage:', chrome.runtime.lastError);
-        popup.remove();
-        return;
-      }
-      
-      if (!result.plaidConnected) {
-        // If not connected, update the popup to prompt connection
-        popup.innerHTML = `
-          <div style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">
-            <h3 style="margin: 0; font-size: 16px; color: #333;">Support Open Source</h3>
-            <p style="margin: 5px 0 0; font-size: 14px; color: #666;">
-              Connect your bank account to make donations.
-            </p>
-          </div>
-          <div style="margin-bottom: 15px;">
-            <p style="margin: 0; font-size: 14px; color: #333;">
-              Securely connect with Plaid to round up purchases.
-            </p>
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <button id="oss-connect-bank" style="
-              background: #4CAF50;
-              color: white;
-              border: none;
-              padding: 8px 12px;
-              border-radius: 4px;
-              cursor: pointer;
-              font-size: 14px;
-              flex-grow: 1;
-              margin-right: 10px;
-            ">Connect Bank</button>
-            <button id="oss-cancel" style="
-              background: none;
-              border: none;
-              padding: 8px 12px;
-              cursor: pointer;
-              font-size: 14px;
-              color: #999;
-            ">Skip</button>
-          </div>
-        `;
-        
-        // Set up event handler for the connect bank button
-        document.getElementById('oss-connect-bank').addEventListener('click', () => {
-          // Clear the active popup marker
-          sessionStorage.removeItem('oss-active-popup');
-          
-          // Set local state to prevent further popups
-          inPlaidConnectionFlow = true;
-          console.log('Connect Bank button clicked, setting Plaid connection flow state');
-          
-          // Notify the background script
-          safeChromeCall(() => {
-            chrome.runtime.sendMessage({ type: 'START_PLAID_LINK' }, response => {
-              if (chrome.runtime.lastError) {
-                console.log('Error sending message:', chrome.runtime.lastError);
-                // Reset the local state if there was an error
-                inPlaidConnectionFlow = false;
-              }
-            });
-          });
-          
-          // Remove the popup
-          popup.remove();
-          
-          // Continue with checkout if there was a pending one
-          continueWithCheckout();
-        });
-        
-        document.getElementById('oss-cancel').addEventListener('click', () => {
-          // Clear the active popup marker when user cancels
-          sessionStorage.removeItem('oss-active-popup');
-          
-          popup.remove();
-          
-          // Continue with checkout if there was a pending one
-          continueWithCheckout();
-        });
-        
-        return;
-      }
-      
-      // Set up event handlers for donation buttons
-      document.getElementById('oss-choose-project').addEventListener('click', () => {
-        console.log('Choose Project button clicked...');
-        
-        // Clear the active popup marker
-        sessionStorage.removeItem('oss-active-popup');
-        
-        // Extract values from the donation amount display to ensure correct values
-        const amountDisplay = popup.querySelector('p strong');
-        let donationAmountValue = donationAmount;
-        
-        if (amountDisplay) {
-          const displayedAmount = parseFloat(amountDisplay.textContent.replace('$', ''));
-          if (!isNaN(displayedAmount)) {
-            donationAmountValue = displayedAmount.toString();
-          }
-        }
-        
-        // Store donation info for the project selection popup
-        chrome.storage.local.set({
-          pendingDonation: {
-            purchaseAmount: purchaseAmount,
-            donationAmount: donationAmountValue
-          }
-        }, () => {
-          // Mark donation as made in this session
-          markDonationMade();
-          
-          // Open the project selection popup
-          chrome.runtime.sendMessage({
-            type: 'OPEN_PROJECT_SELECTOR'
-          });
-          
-          // Remove the current popup
-          popup.remove();
-          
-          // We'll handle the checkout continuation after the project selection popup is closed
-          document.addEventListener('OSS_PROJECT_SELECTED', () => {
-            continueWithCheckout();
-          }, { once: true });
-        });
-      });
-      
-      document.getElementById('oss-donate-random').addEventListener('click', () => {
-        // Clear the active popup marker
-        sessionStorage.removeItem('oss-active-popup');
-        
-        // Process donation to a random project
-        console.log('Donate button clicked, processing random donation...');
-        
-        // Extract values from the donation amount display to ensure correct values
-        const amountDisplay = popup.querySelector('p strong');
-        if (amountDisplay) {
-          const displayedAmount = parseFloat(amountDisplay.textContent.replace('$', ''));
-          if (!isNaN(displayedAmount)) {
-            donationAmount = displayedAmount.toString();
-          }
-        }
-        
-        // Mark donation as made in this session
-        markDonationMade();
-        
-        processDonation(purchaseAmount, donationAmount, true);
-        popup.remove();
-        
-        // Continue with checkout if there was a pending one
-        continueWithCheckout();
-      });
-      
-      document.getElementById('oss-cancel').addEventListener('click', () => {
-        // Clear the active popup marker when user cancels
-        sessionStorage.removeItem('oss-active-popup');
-        
-        popup.remove();
-        
-        // Continue with checkout if there was a pending one
-        continueWithCheckout();
-      });
+  // Cancel button
+  const cancelButton = popupElement.querySelector('#donation-popup-cancel');
+  if (cancelButton) {
+    cancelButton.addEventListener('click', () => {
+      // Track that user has seen donation popup
+      markDonationMade();
+      popupElement.remove();
     });
-  });
+  }
   
-  // Add a mutation observer to ensure the popup stays in the DOM
-  const popupObserver = new MutationObserver((mutations) => {
-    if (!document.body.contains(popup)) {
-      // Popup was removed from DOM, add it back if user hasn't interacted yet
-      const popupData = sessionStorage.getItem('oss-active-popup');
-      if (popupData) {
-        try {
-          const data = JSON.parse(popupData);
-          if (data && data.pendingInteraction) {
-            console.log('Popup was removed from DOM, re-adding it');
-            document.body.appendChild(popup);
-          }
-        } catch (e) {
-          console.log('Error parsing popup data:', e);
-        }
+  // Donate button - modified to directly link to GitHub repo
+  const donateButton = popupElement.querySelector('#donation-popup-donate');
+  if (donateButton) {
+    donateButton.addEventListener('click', () => {
+      // Mark donation popup as seen to prevent repeated popups
+      markDonationMade();
+      
+      // Open GitHub repository in new tab
+      if (projectInfo && projectInfo.html_url) {
+        window.open(projectInfo.html_url, '_blank');
+      } else {
+        // If no specific project, open GitHub trending page
+        window.open('https://github.com/trending', '_blank');
       }
-    }
-  });
-  
-  // Start observing the DOM
-  popupObserver.observe(document.body, { childList: true, subtree: true });
-  
-  // Make sure the popup is still around even if page changes
-  return popup;
+      
+      // Remove the popup
+      popupElement.remove();
+    });
+  }
 }
 
 function continueWithCheckout() {
@@ -855,7 +742,7 @@ chrome.runtime.onMessage.addListener((message) => {
 // Listen for the custom event from the injected script
 document.addEventListener('SHOW_DONATION_POPUP', (event) => {
   // Check if there's already an active donation popup
-  const existingPopup = document.getElementById('oss-donation-popup');
+  const existingPopup = document.getElementById('open-source-donation-popup');
   if (existingPopup) {
     console.log('Donation popup already active, not showing another one');
     return;
@@ -972,7 +859,7 @@ window.addEventListener('load', () => {
       }
       
       integrateWithCheckoutFlow();
-    }, 2000); // Reduced from 5000ms to 2000ms
+    }, 2000); 
     
     // Fallback periodic check with reduced interval
     const purchaseInterval = setInterval(() => {
@@ -989,7 +876,7 @@ window.addEventListener('load', () => {
       }
       
       detectPurchase();
-    }, 3000); // Reduced from 10000ms to 3000ms
+    }, 3000); 
   } catch (error) {
     console.log('Error initializing checkout detection:', error);
   }
