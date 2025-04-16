@@ -1,5 +1,7 @@
 # DiffSentry
 
+![Alt text](diffsentryvert.png)
+
 ## Overview
 
 DiffSentry creates a sustainable support system for open source projects by:
